@@ -1,12 +1,12 @@
 # Game - Programming Assignments Private Repository
 ### Student Information
-  + Name: Tommy Trojan
-  + USC Email: ttrojan@usc.edu
-  + USC ID: 0123456789
+  + Name: Janet Kim
+  + USC Email: janethki@usc.edu
+  + USC ID: 3403982931
 
 ### Game Information
   + Game Name: myAwsomeGame
-  + Game Description: One sentence game description
+  + Game Description: Maybe something like Plants vs. Zombies? But need a side scroller?
   + [Game Design Doc](GameDesignDoc.md)
 
 
