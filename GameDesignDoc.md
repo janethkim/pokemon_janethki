@@ -27,93 +27,49 @@ a wave of monsters are coming, which you're going to have to prepare for.
       of defense, it can be set as a trap, and when an enemy triggers it by stepping on it,
       it will run across the screen, killing everything in its way (moves horizontally across the
       screen, accelerating as it does so)
+     
+## User Interaction
+The user will use the mouse, and not the keyboard, to play the game. The user clicks on the mystery
+boxes to find out what's inside. They will also click on the resulting item to pick it up, like
+coins or hearts. When they have enough money, they will click from a menu on the side where they
+can choose which item to purchase. They will then click the location on the screen where they want
+it to be placed. The shooters will automatically shoot when enemies appear in their line of vision.
+
+## Score Tracker
+There will be a set time that each round will go for, but if the player
+successfully kills all the monsters before the round is completely over,
+there will be a points given. With each monster destroyed, more points
+will be awarded. Points will go down every time you lose a life.
+
+## Lives
+Each time a monster makes it to your line of defense, you lose a life. When this happens,
+the level restarts and points are deducted. They will have a total of 3 lives; after
+letting a monster get past your line of defense 3 times, you die and the game is over.
       
-      
-This is a place holder for your game design document. You are advised to write your document in [Markdown](http://daringfireball.net/projects/markdown/) and the following section will show you how to write a document using Markdown markup.
+## Layout
+When the game initially starts, there will be a [home screen]
+(Images/StartScreen.png) that has three buttons: Start,
+Directions, Quit.
 
-Alternativley, you can write your document in plain text if you wish.
+When they click the Start button, they will then be prompted to enter
+a name for themselves. After doing so, they'll enter the game screen.
+It'll count down from 3 seconds and then the game will officially start.
+In the right, top corner of the screen will be a running total of their score.
+In left, top corner, there will be another box displaying their 
+currency.
 
-----
+On a menu on the left that runs down the length of the screen will be 
+the items which they can purchase to protect themselves from oncoming
+monsters.
 
-## Markdown
-Markdown is a human-readable structured plain text format that is used to convert text into HTML. GitHub automatically renders Markdown into HTML.
-
-This is a crash course on how to use Markdown. The following section will show you the plain text used to generate the document shown in the rendering section.
-
-### Code
-
-```
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
-
->Blockquotes are done as such.
-
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
+Also at the top right corner will be a pause button and a quit button.
+When they click the pause button, a sort of transparent screen will
+appear that asks whether they want Directions, to Resume, or to Quit.
 
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
-```
-
-----
-
-### Rendering
-This section shows the rendering of the plain text above.
-
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
-
->Blockquotes are done as such.
-
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
 
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
+
+
+
 
