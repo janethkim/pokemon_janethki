@@ -9,7 +9,7 @@ a wave of monsters are coming, which you're going to have to prepare for.
       different times; the way I'm imagining it is for them to move horizontally across the 
       screen in the same direction (unless perhaps I implemented some other thing that would
       turn them around).
-  1. A [projectile shooter] (Images/fireFlower.jpg) which will be placed where the user chooses. After that, it won't move.
+  1. A [projectile shooter] (Images/fireflower.jpg) which will be placed where the user chooses. After that, it won't move.
       It will shoot bullets/fireballs at the enemy when it sees it in its line of sight.
   1. The bullets ([fireballs] (Images/fireball.jpg)) that are shot by the projectile shooter. Depending on the type of projectile shooter,
       these bullets may be able to travel vertically or diagonally. The simplest bullet will simply
