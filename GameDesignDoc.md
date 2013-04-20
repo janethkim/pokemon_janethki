@@ -48,7 +48,7 @@ letting a monster get past your line of defense 3 times, you die and the game is
       
 ## Layout
 When the game initially starts, there will be a [home screen]
-(Images/StartScreen) that has three buttons: Start,
+(Images/StartScreen.png) that has three buttons: Start,
 Directions, Quit.
 
 When they click the Start button, they will then be prompted to enter
