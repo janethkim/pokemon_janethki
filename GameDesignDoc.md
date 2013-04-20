@@ -52,7 +52,8 @@ When the game initially starts, there will be a [home screen]
 Directions, Quit.
 
 When they click the Start button, they will then be prompted to enter
-a name for themselves. After doing so, they'll enter the game screen.
+a [name] (Images/Name.png) for themselves. After doing so, they'll enter
+the [game screen] (Images/Gameplay.png).
 It'll count down from 3 seconds and then the game will officially start.
 In the right, top corner of the screen will be a running total of their score.
 In left, top corner, there will be another box displaying their 
@@ -60,10 +61,12 @@ currency.
 
 On a menu on the left that runs down the length of the screen will be 
 the items which they can purchase to protect themselves from oncoming
-monsters.
+monsters. They click on the item to select it and then click on
+an area on the screen where they want it to be placed.
 
 Also at the top right corner will be a pause button and a quit button.
-When they click the pause button, a sort of transparent screen will
+When they click the [pause button] (Images/pause.png), a sort of
+transparent screen will
 appear that asks whether they want Directions, to Resume, or to Quit.
 
 
