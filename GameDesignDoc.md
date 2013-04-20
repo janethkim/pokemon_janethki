@@ -5,23 +5,24 @@ This will be a sidescroll game in which the player is a Pokemon trainer trying t
 attacks from other Pokemon
 
 ## Things
-  1. A Jigglypuff that rolls onto screen. A warning will appear on the
+  1. A [Jigglypuff] (Images/jigglypuff.gif) that rolls onto screen. A warning will appear on the
   edge of the screen to indicate that it's coming. It will roll over the player if he/she
   doesn't jump over it.
-  1. A Starmie that can float in air that will whirl in for like 2 seconds, after which it
+  1. A [Starmie] (Images/Starmie.gif) that can float in air that will whirl in for like 2 seconds, after which it
   will shoot a hyper beam for a certain amount of time. If the player is caught
   in it or jumps into it, he/she is annihilated.
-  1. Pokeballs will be floating in the air, which the player wants to collect. Some will
+  1. [Pokeballs] (Images/Pokeball.png) will be floating in the air, which the player wants to collect. Some will
   move in a general sinusoidal fashion through the screen which the player wants
   to aim for to get. Others will be lined up in rows on the ground or randomly in the air.
   By getting pokeballs, the player will earn points. Certain pokeballs
   are worth more than others.
-  1. There will be general obstacles. For example, a boulder that blocks the way on the
+  1. There will be general obstacles. For example, a [boulder] (Images/boulder.png) that blocks the way on the
   ground. Legendary Pokemon (Articuno, Moltres, Zapdos) that float in the air that will
   kill you if you run into them.
-  1. At certain parts, a Chansey will come out and lay eggs, which you can run into
-  to find out objects inside. If you get a special item, you'll get a floating Mew beside you
-  that makes a forcefield or something around you that lets you run through anything.
+  1. At certain parts, a [Chansey] (Images/chansey.png) will come out and lay eggs, which you can run into
+  to find out objects inside
+  1. From the egg, you could get a floating [Mew] (Images/Mew.gif) that will accompany for
+  a little while. it forms a forcefield that makes the user essentially invincible.
   
 ## User Interaction
 The user will use the mouse to start the game and pause the game, but most of the gameplay
@@ -52,10 +53,10 @@ there will be buttons for pausing the game and for quitting the game.
 When you click the [pause button] (Images/pause.png), it will lead you to another screen that has 3 buttons:
 resume game, directions, and quit.
 
-If you click the directions button, it will bring up a screen with the purpose of 
+If you click the [directions] (Images/Directions.png) button, it will bring up a screen with the purpose of 
 the game and what each thing does.
 
-If you click the quit screen, it will display the score, which the user can click OK.
+If you click the [quit screen] (Images/quit.png), it will display the score, which the user can click OK.
 Then the window closes.
 
 
