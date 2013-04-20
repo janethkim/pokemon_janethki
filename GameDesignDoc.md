@@ -46,7 +46,7 @@ be rare. It will die when it loses all of its lives.
 When the game starts, a [start screen] (Images/StartScreen.png) will pull up.
 It will have 3 buttons with the labels
 start, directions, and quit. The start button leads to [another screen] (Images/Name.png) which asks the user
-to input a name. After that, the interface will display the main gamescreen.
+to input a name. After that, the interface will display the main [gamescreen] (Images/Gameplay.png).
 After counting for 3 seconds, the game will start. In the top right corner of the game,
 there will be buttons for pausing the game and for quitting the game.
 
