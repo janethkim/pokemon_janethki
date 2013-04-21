@@ -6,6 +6,7 @@ mainwindow.cpp~
 mainwindow.h~
 thing.cpp~
 thing.h~
+.gitignore~
 
 # Compiled Object files
 *.slo
