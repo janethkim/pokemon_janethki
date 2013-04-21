@@ -1,11 +1,13 @@
 #include "thing.h"
 
-Thing::Thing(QPixMap *pixMap_, int x_, int y_)
+Thing::Thing(QPixmap* pixMap_, double x_, double y_) : pixMap(pixMap_)
 {
   x = x_;
   y = y_;
-  pixMap = pixMap_;
+  //  pixMap = pixMap_;
   setPixmap( *pixMap );
   setPos(x, y);
 }
 
+Thing::~Thing()
+{ }
