@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include "background.h"
+#include "player.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
@@ -26,6 +27,8 @@ private:
   Background *bg_1;
   Background *bg_2;
   QPixmap* bgPic;
+  Player *user;
+  QPixmap *stand, *left, *right;
   
 public slots:
   void handleTimer();

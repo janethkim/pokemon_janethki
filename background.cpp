@@ -11,12 +11,13 @@ Background::Background(QPixmap* pixMap_, double x_, double y_)
 void Background::move(int xmax, int ymax)
 {
   x -= vx;
-  if ( abs(x) >= xmax )
+  if ( x <= -xmax )
     x = xmax;
   y -= vy;
   if ( abs(y) > ymax )
     y = ymax;
     
   setPos(x, y);
+
   
 }

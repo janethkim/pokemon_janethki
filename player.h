@@ -11,7 +11,7 @@ public:
 private:
   int position;
   QPixmap *left, *right;
-
+  int count;
 };
 
 
