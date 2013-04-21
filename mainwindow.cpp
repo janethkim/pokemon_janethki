@@ -1,18 +1,20 @@
 #include "mainwindow.h"
 #include <cstdlib>
+#include <QDebug>
 #include <iostream>
 using namespace std;
 
 MainWindow::MainWindow()
 {
+
   window = new QWidget;
-//  layout = new QVBoxLayout;
+
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
-//  window->setLayout(layout);
+
   scene = new QGraphicsScene;
-  view = new QGraphicsView(scene, window);
-//  view->setFocusPolicy( Qt::NoFocus );
-//  layout->addWidget(view);
+
+  view = new MainView(scene, this, window);
+
   view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
   timer = new QTimer(this);
   timer_user = new QTimer(this);
@@ -22,9 +24,7 @@ MainWindow::MainWindow()
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0);
   scene->addItem( bg_1 );
   scene->addItem( bg_2 );
-  this->setFocus();
-//  setFocus();
-//  cout << hasFocus() << endl;
+
   
   grid = new QGraphicsRectItem(0, 0, WINDOW_MAX_X, WINDOW_MAX_Y-2);
   scene->setSceneRect(grid->rect());
@@ -36,19 +36,19 @@ MainWindow::MainWindow()
   left = new QPixmap("Images/picturesforrunningplayer/runleft.png");
   right = new QPixmap("Images/picturesforrunningplayer/runright.png");
   user = new Player(stand, left, right, 100, 340, this);
-  
+
   scene->addItem(user);
   
   timer_user->setInterval(5);
   connect(timer_user, SIGNAL(timeout()), this, SLOT(handleTimer_user()));
+//  connect(timer_user, SIGNAL(timeout()), this, SLOT(debug()));
   
   timer->setInterval(5);
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer())); 
   
   timer_jump->setInterval(5);
   connect(timer_jump, SIGNAL(timeout()), this, SLOT(handleTimer_jump()));
-//  setFocus();
-//  window->addWidget( view );
+
 }
 
 MainWindow::~MainWindow()
@@ -62,15 +62,14 @@ MainWindow::~MainWindow()
   
 }
 
+
 void MainWindow::show()
 {
+  setFocus();
   timer->start();
   timer_user->start();
   window->show();
-  this->activateWindow();
-  setFocus();
-  cout << hasFocus() << endl;
-  cout << scene->hasFocus() << endl;
+
 }
 
 void MainWindow::handleTimer_user()
@@ -84,16 +83,20 @@ void MainWindow::handleTimer()
   bg_2->move(WINDOW_MAX_X, WINDOW_MAX_Y);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *e)
+void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-  cout << this->hasFocus() << endl;
-  cout << "What." << endl;
-  switch(e->key()) {
+//  cout << this->hasFocus() << endl;
+//  cout << "What." << endl;
+  switch(event->key()) {
     case Qt::Key_Up:
-      timer_user->stop();
-      timer_jump->start();
+      if (timer_user->isActive())
+        timer_user->stop();
+      if (!timer_user->isActive())
+        timer_jump->start();
       break;
   }
+  
+//  QWidget::keyPressEvent(event);
 }
 
 void MainWindow::handleTimer_jump()
