@@ -9,6 +9,8 @@ public:
   Thing(QPixmap* pixMap_, double x_, double y_);
   ~Thing();
   virtual void move(int xmax, int ymax) = 0;
+  double getX();
+  double getY();
   
 protected:
   double x;

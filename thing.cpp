@@ -11,3 +11,9 @@ Thing::Thing(QPixmap* pixMap_, double x_, double y_) : pixMap(pixMap_)
 
 Thing::~Thing()
 { }
+
+double Thing::getX()
+{ return x; }
+
+double Thing::getY()
+{ return y; }
