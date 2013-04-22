@@ -5,6 +5,11 @@
 
 class Obstacle : public Thing {
 public:
+  Obstacle(QPixmap *pixMap_, double x_, double y_);
+  ~Obstacle()
+  {}
+  
+  void move();
 private:
 
 };
