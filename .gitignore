@@ -7,6 +7,21 @@ mainwindow.h~
 thing.cpp~
 thing.h~
 .gitignore~
+Makefile
+game.cpp~
+game_janethki
+game_janethki.pro
+game_janethki.pro~
+mainscene.cpp~
+mainscene.h~
+mainview.cpp~
+mainview.h~
+moc_mainwindow.cpp
+obstacle.cpp~
+obstacle.h~
+player.cpp~
+player.h~
+
 
 # Compiled Object files
 *.slo
