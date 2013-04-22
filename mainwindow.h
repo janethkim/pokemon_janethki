@@ -13,11 +13,14 @@
 #include "background.h"
 #include "player.h"
 #include "mainview.h"
+#include "obstacle.h"
+#include "mylist.h"
+#include <QList>
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
-class Player;
+
 class MainView;
 
 class MainWindow : public QWidget {
@@ -32,7 +35,7 @@ private:
   QWidget *window;
   QVBoxLayout *layout;
   QGraphicsRectItem *grid;
-  QTimer *timer, *timer_user, *timer_jump;
+  QTimer *timer, *timer_user, *timer_jump, *timer_die;
   QGraphicsScene *scene;
 //  QGraphicsView *view;
   MainView *view;
@@ -41,12 +44,21 @@ private:
   QPixmap* bgPic;
   Player *user;
   QPixmap *stand, *left, *right;
+  QPixmap *jigglypuff;
+  MyList<Thing*> badThings;
+  MyList<Thing*> goodThings;
+  QPixmap *obstacle;
+  bool dead;
+//  QList<QGraphicsItem*> collisions;
+  
 //  QApplication *app;
   
 public slots:
   void handleTimer();
   void handleTimer_user();
   void handleTimer_jump();
+  void generateEnemy();
+  void handleTimer_die();
 //  void debug();
 
   
