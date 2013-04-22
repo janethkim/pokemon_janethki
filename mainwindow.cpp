@@ -23,6 +23,7 @@ MainWindow::MainWindow()
   timer_user = new QTimer(this);
   timer_jump = new QTimer(this);
   timer_die = new QTimer(this);
+//  timer_enemy = new QTimer(this);
   bgPic = new QPixmap("Images/game-background.jpg");
   bg_1 = new Background(bgPic, 0, 0);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0);
@@ -64,6 +65,9 @@ MainWindow::MainWindow()
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(generateEnemy()));
+  
+//  timer_enemy->setInterval(100);
+//  connect(timer_enemy, SIGNAL(timeout()), this, SLOT(generateEnemy()));
   
   timer_jump->setInterval(5);
   connect(timer_jump, SIGNAL(timeout()), this, SLOT(handleTimer_jump()));
@@ -178,21 +182,43 @@ void MainWindow::handleTimer_jump()
 
 void MainWindow::generateEnemy()
 {
-  int choice = rand()%1000;
+  int choice = rand()%500;
   Thing* temp;
+  bool added = true;
   switch(choice)
   {
   case 0:
     temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
-    badThings.push_back(temp);
     scene->addItem(temp);
+    
+    badThings.push_back(temp);
     break;
   case 1:
 //    temp = new Jigglypuff(jigglypuff, 500, 335);
     temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335);
-    badThings.push_back(temp);
     scene->addItem(temp);
+    
+    badThings.push_back(temp);
     break;
+  default:
+    added = false;
+    break;
+  }
+  
+  if (added)
+  {
+    for (int j = 0; j < badThings.size(); j++)
+    {
+      if (temp == badThings[j])
+        continue;
+      else if (temp->collidesWithItem(badThings[j]))
+      {
+        scene->removeItem(temp);
+        badThings.remove(temp);
+        break;
+      }
+    }
+    
   }
 }
 
