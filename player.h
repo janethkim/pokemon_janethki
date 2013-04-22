@@ -2,17 +2,17 @@
 #define PLAYER_H
 
 #include "thing.h"
-#include "mainwindow.h"
 #include <QGraphicsSceneMouseEvent>
 
-class MainWindow;
 
 class Player : public Thing {
 public:
-  Player(QPixmap* pixMap_, QPixmap* left, QPixmap* right, double x_, double y_, MainWindow* w_);
-  void move( int xmax, int ymax );
+  Player(QPixmap* pixMap_, QPixmap* left, QPixmap* right, double x_, double y_);
+  void move();
   void jump();
   bool jumped;
+  void die();
+  bool decreaseLife();
   
 //protected:
 //  void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -21,7 +21,8 @@ private:
   int position;
   QPixmap *left, *right;
   int count;
-  MainWindow *w;
+  int angle;
+  int lives;
 
 
 };
