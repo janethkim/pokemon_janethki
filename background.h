@@ -8,6 +8,8 @@ public:
   Background(QPixmap *pixMap_, double x_, double y_);
   ~Background() {}
   void move(int xmax, int ymax);
+  void move() {};
+  void die();
 
 };
 

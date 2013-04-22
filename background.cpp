@@ -4,7 +4,7 @@
 Background::Background(QPixmap* pixMap_, double x_, double y_)
   : Thing(pixMap_, x_, y_)
 {
-  vx = 0.5;
+  vx = 1;
   vy = 0;
 }
 
