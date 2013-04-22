@@ -10,7 +10,6 @@ Obstacle::Obstacle(QPixmap* pixMap_, double x_, double y_)
 void Obstacle::move()
 {
   x -= vx;
-  
   setPos(x, y);
 }
 
