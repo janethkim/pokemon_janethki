@@ -15,7 +15,7 @@
 #include "mainview.h"
 #include "obstacle.h"
 #include "mylist.h"
-#include <QList>
+#include "jigglypuff.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
@@ -44,7 +44,8 @@ private:
   QPixmap* bgPic;
   Player *user;
   QPixmap *stand, *left, *right;
-  QPixmap *jigglypuff;
+//  QPixmap *jigglypuff;
+  QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   MyList<Thing*> badThings;
   MyList<Thing*> goodThings;
   QPixmap *obstacle;

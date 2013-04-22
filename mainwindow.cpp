@@ -45,6 +45,14 @@ MainWindow::MainWindow()
   obstacle = new QPixmap("Images/boulder_scale.png");
   
   jigglypuff = new QPixmap("Images/remorepics/jigglypuff_scale.png");
+  r1 = new QPixmap("Images/jigglypuff_45.png");
+  r2 = new QPixmap("Images/jigglypuff_90.png");
+  r3 = new QPixmap("Images/jigglypuff_135.png");
+  r4 = new QPixmap("Images/jigglypuff_180.png");
+  r5 = new QPixmap("Images/jigglypuff_225.png");
+  r6 = new QPixmap("Images/jigglypuff_270.png");
+  r7 = new QPixmap("Images/jigglypuff_315.png");
+  
 
   scene->addItem(user);
   
@@ -171,13 +179,20 @@ void MainWindow::handleTimer_jump()
 void MainWindow::generateEnemy()
 {
   int choice = rand()%1000;
-  
+  Thing* temp;
   switch(choice)
   {
   case 0:
-    Thing* temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
+    temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
     badThings.push_back(temp);
     scene->addItem(temp);
+    break;
+  case 1:
+//    temp = new Jigglypuff(jigglypuff, 500, 335);
+    temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335);
+    badThings.push_back(temp);
+    scene->addItem(temp);
+    break;
   }
 }
 
