@@ -60,6 +60,7 @@ private:
   MyList<Thing*> goodThings;
   QPixmap *obstacle;
   bool dead;
+  int obst, star, puff;
 //  QList<QGraphicsItem*> collisions;
   
 //  QApplication *app;

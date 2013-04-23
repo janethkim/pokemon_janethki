@@ -8,8 +8,7 @@ using namespace std;
 
 MainWindow::MainWindow()
 {
-//  badThings = new MyList<Thing*>;
-//  goodThings = new MyList<Thing*>;
+  obst = star = puff = 0;
   dead = false;
   srand(clock());
   window = new QWidget;
@@ -192,10 +191,13 @@ void MainWindow::handleTimer()
     }
     else if (user->collidesWithItem(goodThings[i]) || bird->collidesWithItem(goodThings[i]))
     {
+      int val = goodThings[i]->collision();
+      user->updateScore(val);
       scene->removeItem(goodThings[i]);
+      delete goodThings[i];
       goodThings.pop(i);
-//      int val = goodThings[i]->collision();
-//      user->updateScore(val);
+      
+     
     }
   }
   
@@ -215,6 +217,8 @@ void MainWindow::handleTimer()
 //  }
 
 }
+
+
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
@@ -290,29 +294,43 @@ void MainWindow::handleTimer_fall()
 
 void MainWindow::generateEnemy()
 {
-  int choice = rand()%1000;
+  int choice = rand()%500;
   Thing* temp;
-  bool added = true;
+  bool added = false;
   switch(choice)
   {
   case 0:
-    temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
-    scene->addItem(temp);
-    
-    badThings.push_back(temp);
+  case 5:
+    obst++;
+    if (obst%5 == 0)
+    {
+      temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
+      scene->addItem(temp);
+      
+      badThings.push_back(temp);
+      added = true;
+    }
     break;
   case 1:
 //    temp = new Jigglypuff(jigglypuff, 500, 335);
-    temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335);
-    scene->addItem(temp);
-    
-    badThings.push_back(temp);
+    puff++;
+    if (puff%5 == 0)
+    {
+      temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335);
+      scene->addItem(temp);
+      badThings.push_back(temp);
+      added = true;
+    }
     break;
   case 3:
-    cout << "Starmie created." << endl;
-    temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
-    scene->addItem(temp);
-    badThings.push_back(temp);
+    star++;
+    if (star%5 == 0)
+    {
+      temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
+      scene->addItem(temp);
+      badThings.push_back(temp);
+      added = true;
+    }
     break;
   default:
     added = false;
