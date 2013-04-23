@@ -21,6 +21,17 @@ obstacle.cpp~
 obstacle.h~
 player.cpp~
 player.h~
+hyperbeam.cpp~
+hyperbeam.h~
+jigglypuff.cpp~
+jigglypuff.h~
+pidgey.cpp~
+pidgey.h~
+pokeball.cpp~
+pokeball.h~
+starmie.cpp~
+starmie.h~
+
 
 
 # Compiled Object files
