@@ -17,7 +17,7 @@ Jigglypuff::Jigglypuff(QPixmap* pixMap_, QPixmap* r1_, QPixmap* r2_, QPixmap* r3
 QPixmap* r4_, QPixmap* r5_, QPixmap* r6_,QPixmap* r7_, double x_, double y_)
   : Thing(pixMap_, x_, y_), r1(r1_), r2(r2_), r3(r3_), r4(r4_), r5(r5_), r6(r6_), r7(r7_)
 {
-  vx = 2;
+  vx = 3;
   vy = 0;
   angle = 0;
   count = 0;
