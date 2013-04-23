@@ -8,6 +8,8 @@ using namespace std;
 
 MainWindow::MainWindow()
 {
+//  badThings = new MyList<Thing*>;
+//  goodThings = new MyList<Thing*>;
   dead = false;
   srand(clock());
   window = new QWidget;
@@ -63,7 +65,12 @@ MainWindow::MainWindow()
   r7 = new QPixmap("Images/jigglypuff_315.png");
   
   pokeball = new QPixmap("Images/remorepics/Pokeball_scale.png");
+  Thing* temp = new Pokeball(pokeball, WINDOW_MAX_X, 150, true);
+  scene->addItem(temp);
+  goodThings.push_back(temp);
   
+  starmie = new QPixmap("Images/remorepics/Starmie_scale.png");
+  beam = new QPixmap("Images/hyper_beam.png");
 
   scene->addItem(user);
   
@@ -113,7 +120,21 @@ MainWindow::~MainWindow()
   delete left;
   delete right;
   delete obstacle;
-  
+  delete jigglypuff;
+  delete r1;
+  delete r2;
+  delete r3;
+  delete r4;
+  delete r5;
+  delete r6;
+  delete r7;
+  delete starmie;
+  delete pokeball;
+  delete open;
+  delete closed;
+  delete beam;
+//  delete badThings;
+//  delete goodThings;
 }
 
 
@@ -138,11 +159,13 @@ void MainWindow::handleTimer()
   for (int i = 0; i < badThings.size(); i++)
   { 
     badThings[i]->move();
-    if (badThings[i]->getX() < -300 || badThings[i]->getX() > WINDOW_MAX_X )
+    if (badThings[i]->getX() < -300 || badThings[i]->getX() > WINDOW_MAX_X+20 )
     {
       scene->removeItem(badThings[i]);
-      delete badThings[i];
-      badThings.pop(i);
+      Thing* temp = badThings.pop(i);
+      delete temp;
+     
+    
     }
     else if (user->collidesWithItem(badThings[i]))
     {
@@ -167,12 +190,12 @@ void MainWindow::handleTimer()
       delete goodThings[i];
       goodThings.pop(i);
     }
-    else if (user->collidesWithItem(goodThings[i]))
+    else if (user->collidesWithItem(goodThings[i]) || bird->collidesWithItem(goodThings[i]))
     {
       scene->removeItem(goodThings[i]);
       goodThings.pop(i);
-      int val = goodThings[i]->collision();
-      user->updateScore(val);
+//      int val = goodThings[i]->collision();
+//      user->updateScore(val);
     }
   }
   
@@ -267,7 +290,7 @@ void MainWindow::handleTimer_fall()
 
 void MainWindow::generateEnemy()
 {
-  int choice = rand()%500;
+  int choice = rand()%1000;
   Thing* temp;
   bool added = true;
   switch(choice)
@@ -285,6 +308,12 @@ void MainWindow::generateEnemy()
     
     badThings.push_back(temp);
     break;
+  case 3:
+    cout << "Starmie created." << endl;
+    temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
+    scene->addItem(temp);
+    badThings.push_back(temp);
+    break;
   default:
     added = false;
     break;
@@ -298,6 +327,7 @@ void MainWindow::generateEnemy()
         continue;
       else if (temp->collidesWithItem(badThings[j]))
       {
+        cout << "Probably Starmie removed." << endl;
         scene->removeItem(temp);
         badThings.remove(temp);
         break;
