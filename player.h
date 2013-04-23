@@ -3,7 +3,7 @@
 
 #include "thing.h"
 #include "pidgey.h"
-#include <QGraphicsSceneMouseEvent>
+//#include <QGraphicsSceneMouseEvent>
 
 
 class Player : public Thing {

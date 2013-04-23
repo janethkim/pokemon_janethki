@@ -83,7 +83,7 @@ void Player::fall()
 void Player::rise()
 {
   if(!jumped)
-  { vy = 3; jumped = false; pidgey->setVisible(true); }
+  { vy = 2; jumped = false; pidgey->setVisible(true); }
   
   y = y - vy;
   if ((y-65) < 0)
