@@ -13,6 +13,7 @@ public:
   MainView(QGraphicsScene *scene, MainWindow* w_, QWidget* parent);
 protected:
   void keyPressEvent(QKeyEvent* keyEvent);
+  void keyReleaseEvent(QKeyEvent* keyEvent);
 private:
   MainWindow* w;
   

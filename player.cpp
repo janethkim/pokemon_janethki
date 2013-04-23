@@ -1,8 +1,8 @@
 #include "player.h"  
 
 
-Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, double x_, double y_)
-  : Thing(pixMap_, x_, y_), jumped(false)
+Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, Pidgey* pidgey_, double x_, double y_)
+  : Thing(pixMap_, x_, y_), jumped(false), pidgey(pidgey_)
 {
   count = 0;
   position = 0;
@@ -12,6 +12,7 @@ Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, double x_, dou
   left = left_;
   right = right_;
   lives = 3;
+  score = 0;
 }
 
 //void Player::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -53,6 +54,49 @@ void Player::jump()
   
 }
 
+void Player::fall()
+{
+
+  vy = vy - 0.1;
+  if (vy < -5)
+    vy = -5;
+  y = y -vy;
+  if (y > 340)
+  {  y = 340; vy = 0; }
+  if ((y-65) < 0)
+    y = 65;
+  setPos(x,y);
+  if (pidgey->isOpen())
+  { pidgey->setPos(x-30, y-80); pidgey->setY(y-80); }
+  else
+  {  pidgey->setPos(x-30, y-65); pidgey->setY(y-65); }
+  
+  if (vy < 0)
+    pidgey->setOpen(true);
+//  else
+//    pidgey->move();
+    
+  if(pidgey->getY() >= 260)
+    pidgey->setVisible(false);
+}
+
+void Player::rise()
+{
+  if(!jumped)
+  { vy = 3; jumped = false; pidgey->setVisible(true); }
+  
+  y = y - vy;
+  if ((y-65) < 0)
+  { y =65; vy = 0; }
+  setPos(x,y);
+  pidgey->setOpen(false);
+  
+  pidgey->setPos(x-30, y-65); pidgey->setY(y-65);
+//  pidgey->move();
+  vy += 0.5;
+  
+}
+
 void Player::die()
 {
   //rotate the player
@@ -69,6 +113,16 @@ bool Player::decreaseLife()
     return true;
   else
     return false;
+}
+
+void Player::updateScore(int val)
+{
+  score += val;
+}
+
+int Player::getScore()
+{
+  return score;
 }
 
 

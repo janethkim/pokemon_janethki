@@ -9,6 +9,7 @@ public:
   Thing(QPixmap* pixMap_, double x_, double y_);
   ~Thing();
   virtual void move() = 0;
+  virtual int collision() { return 0; }
   double getX();
   double getY();
   

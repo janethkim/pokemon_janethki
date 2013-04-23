@@ -16,6 +16,7 @@
 #include "obstacle.h"
 #include "mylist.h"
 #include "jigglypuff.h"
+#include "pokeball.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
@@ -30,12 +31,15 @@ public:
   ~MainWindow();
   void show();
   void keyPressEvent(QKeyEvent *event);
+  void keyReleaseEvent(QKeyEvent *event);
   
 private:
   QWidget *window;
   QVBoxLayout *layout;
   QGraphicsRectItem *grid;
-  QTimer *timer, *timer_user, *timer_jump, *timer_die;
+  QTimer *timer, *timer_user, *timer_die, *timer_enemy;
+//  QTimer *timer_jump;
+  QTimer *timer_rise, *timer_fall;
   QGraphicsScene *scene;
 //  QGraphicsView *view;
   MainView *view;
@@ -43,9 +47,12 @@ private:
   Background *bg_2;
   QPixmap* bgPic;
   Player *user;
+  Pidgey *bird;
   QPixmap *stand, *left, *right;
+  QPixmap *open, *closed;
 //  QPixmap *jigglypuff;
   QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
+  QPixmap *pokeball;
   MyList<Thing*> badThings;
   MyList<Thing*> goodThings;
   QPixmap *obstacle;
@@ -57,9 +64,11 @@ private:
 public slots:
   void handleTimer();
   void handleTimer_user();
-  void handleTimer_jump();
+//  void handleTimer_jump();
   void generateEnemy();
   void handleTimer_die();
+  void handleTimer_rise();
+  void handleTimer_fall();
 //  void debug();
 
   

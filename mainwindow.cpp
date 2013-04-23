@@ -11,7 +11,7 @@ MainWindow::MainWindow()
   dead = false;
   srand(clock());
   window = new QWidget;
-
+  
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
 
   scene = new QGraphicsScene;
@@ -21,7 +21,9 @@ MainWindow::MainWindow()
   view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
   timer = new QTimer(this);
   timer_user = new QTimer(this);
-  timer_jump = new QTimer(this);
+//  timer_jump = new QTimer(this);
+  timer_rise = new QTimer(this);
+  timer_fall = new QTimer(this);
   timer_die = new QTimer(this);
 //  timer_enemy = new QTimer(this);
   bgPic = new QPixmap("Images/game-background.jpg");
@@ -38,10 +40,16 @@ MainWindow::MainWindow()
   view->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
   view->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
   
+  open = new QPixmap("Images/pidgey.png");
+  closed = new QPixmap("Images/pidgey_close.png");
+  bird = new Pidgey(open, closed, 0, 0);
+  scene->addItem(bird);
+  bird->setVisible(false);
+  
   stand = new QPixmap("Images/picturesforrunningplayer/standing.png");
   left = new QPixmap("Images/picturesforrunningplayer/runleft.png");
   right = new QPixmap("Images/picturesforrunningplayer/runright1.png");
-  user = new Player(stand, left, right, 100, 340);
+  user = new Player(stand, left, right, bird, 100, 340);
   
   obstacle = new QPixmap("Images/boulder_scale.png");
   
@@ -53,6 +61,8 @@ MainWindow::MainWindow()
   r5 = new QPixmap("Images/jigglypuff_225.png");
   r6 = new QPixmap("Images/jigglypuff_270.png");
   r7 = new QPixmap("Images/jigglypuff_315.png");
+  
+  pokeball = new QPixmap("Images/remorepics/Pokeball_scale.png");
   
 
   scene->addItem(user);
@@ -69,8 +79,14 @@ MainWindow::MainWindow()
 //  timer_enemy->setInterval(100);
 //  connect(timer_enemy, SIGNAL(timeout()), this, SLOT(generateEnemy()));
   
-  timer_jump->setInterval(5);
-  connect(timer_jump, SIGNAL(timeout()), this, SLOT(handleTimer_jump()));
+//  timer_jump->setInterval(5);
+//  connect(timer_jump, SIGNAL(timeout()), this, SLOT(handleTimer_jump()));
+  timer_rise->setInterval(5);
+  connect(timer_rise, SIGNAL(timeout()), this, SLOT(handleTimer_rise()));
+  
+  timer_fall->setInterval(5);
+  connect(timer_fall, SIGNAL(timeout()), this, SLOT(handleTimer_fall()));
+  
   
   timer_die->setInterval(5);
   connect(timer_die, SIGNAL(timeout()), this, SLOT(handleTimer_die()));
@@ -88,7 +104,9 @@ MainWindow::~MainWindow()
   delete window;
   delete timer;
   delete timer_user;
-  delete timer_jump;
+//  delete timer_jump;
+  delete timer_rise;
+  delete timer_fall;
   delete timer_die;
   delete bgPic;
   delete stand;
@@ -123,25 +141,55 @@ void MainWindow::handleTimer()
     if (badThings[i]->getX() < -300 || badThings[i]->getX() > WINDOW_MAX_X )
     {
       scene->removeItem(badThings[i]);
-      badThings.remove(badThings[i]);
+      delete badThings[i];
+      badThings.pop(i);
     }
-    
-  }
-  
-  
-  for (int j = 0; j < badThings.size(); j++)
-  {
-    QGraphicsItem *temp = badThings[j];
-    if (user->collidesWithItem(temp))
+    else if (user->collidesWithItem(badThings[i]))
     {
       dead = true;
+      bird->setVisible(false);
       timer->stop();
       timer_user->stop();
-      timer_jump->stop();
+//      timer_jump->stop();
+      timer_fall->stop();
+      timer_rise->stop();
       timer_die->start();
-      
+      break;
     }
   }
+  
+  for (int i = 0; i < goodThings.size(); i++)
+  {
+    goodThings[i]->move();
+    if (goodThings[i]->getX() < -300 || goodThings[i]->getX() > WINDOW_MAX_X+20 )
+    {
+      scene->removeItem(goodThings[i]);
+      delete goodThings[i];
+      goodThings.pop(i);
+    }
+    else if (user->collidesWithItem(goodThings[i]))
+    {
+      scene->removeItem(goodThings[i]);
+      goodThings.pop(i);
+      int val = goodThings[i]->collision();
+      user->updateScore(val);
+    }
+  }
+  
+  
+//  for (int j = 0; j < badThings.size(); j++)
+//  {
+//    QGraphicsItem *temp = badThings[j];
+//    if (user->collidesWithItem(temp))
+//    {
+//      dead = true;
+//      timer->stop();
+//      timer_user->stop();
+//      timer_jump->stop();
+//      timer_die->start();
+//      
+//    }
+//  }
 
 }
 
@@ -155,29 +203,66 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
       case Qt::Key_Up:
         if (timer_user->isActive())
           timer_user->stop();
-        if (!timer_user->isActive())
-          timer_jump->start();
+//        if (!timer_user->isActive())
+//          timer_jump->start();
+        if (timer_fall->isActive())
+          timer_fall->stop();
+        timer_rise->start();
+         
         break;
     }
   }
+}
   
+  
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+  if(!dead)
+  {
+    switch(event->key())
+    {
+    case Qt::Key_Up:
+      timer_rise->stop();
+      timer_fall->start();
+      break;
+    }
+  }
+}
 //  QWidget::keyPressEvent(event);
+
+
+//void MainWindow::handleTimer_jump()
+//{
+//  if (user->getY() == 340 && user->jumped )
+//  {
+//    timer_jump->stop();
+//    timer_user->start();
+//    user->jumped = false;
+//    return;
+//  }
+//  
+//  else
+//  {
+//    user->jump();
+//  }
+//}
+
+void MainWindow::handleTimer_rise()
+{
+    user->rise();
 }
 
-void MainWindow::handleTimer_jump()
+void MainWindow::handleTimer_fall()
 {
-  if (user->getY() == 340 && user->jumped )
+  if (dead || user->getY() >= 340)
   {
-    timer_jump->stop();
+    timer_fall->stop();
     timer_user->start();
     user->jumped = false;
-    return;
+    
   }
-  
   else
-  {
-    user->jump();
-  }
+    user->fall();
 }
 
 void MainWindow::generateEnemy()

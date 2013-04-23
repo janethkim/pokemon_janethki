@@ -11,3 +11,8 @@ void MainView::keyPressEvent(QKeyEvent* keyEvent)
   
     w->keyPressEvent(keyEvent);
 }
+
+void MainView::keyReleaseEvent(QKeyEvent* keyEvent)
+{
+    w->keyReleaseEvent(keyEvent); 
+}
