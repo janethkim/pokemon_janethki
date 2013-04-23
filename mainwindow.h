@@ -17,6 +17,7 @@
 #include "mylist.h"
 #include "jigglypuff.h"
 #include "pokeball.h"
+#include "starmie.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
@@ -50,9 +51,11 @@ private:
   Pidgey *bird;
   QPixmap *stand, *left, *right;
   QPixmap *open, *closed;
+  QPixmap *starmie;
 //  QPixmap *jigglypuff;
   QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   QPixmap *pokeball;
+  QPixmap *beam;
   MyList<Thing*> badThings;
   MyList<Thing*> goodThings;
   QPixmap *obstacle;
