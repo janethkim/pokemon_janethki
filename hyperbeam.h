@@ -7,15 +7,16 @@
 
 class HyperBeam : public Thing {
 public:
-  HyperBeam(QPixmap *pixMap_, double x_, double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_);
+  HyperBeam(QPixmap *pixMap_, double x_, double y_);
   void move();
-  void remove();
+  void setPos(int x_, int y_);
+//  void remove();
   void setMove(bool value);
 private:
-  MyList<Thing*> *badThings;
-  QGraphicsScene *scene;
-  MyList<HyperBeam*> moreBeams;
-  int xlast;
+//  MyList<Thing*> *badThings;
+//  QGraphicsScene *scene;
+//  MyList<HyperBeam*> moreBeams;
+  int xlast, count;
   bool canMove;
   
 };
