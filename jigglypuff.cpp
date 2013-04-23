@@ -1,7 +1,7 @@
 #include "jigglypuff.h"
 #include <cmath>
 
-#define PI 3.14159265
+//#define PI 3.14159265
 
 //Jigglypuff::Jigglypuff(QPixmap* pixMap_, double x_, double y_)
 //  : Thing(pixMap_, x_, y_) 
