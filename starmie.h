@@ -18,6 +18,7 @@ private:
   HyperBeam *beam;
   MyList<Thing*> *badThings;
   QGraphicsScene *scene;
+  QPixmap* beampic;
 
 };
 
