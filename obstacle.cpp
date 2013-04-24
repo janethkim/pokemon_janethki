@@ -3,7 +3,7 @@
 Obstacle::Obstacle(QPixmap* pixMap_, double x_, double y_)
   : Thing(pixMap_, x_, y_)
 {
-  vx = 1;
+  vx = 0.5;
   vy = 0;
 }
 

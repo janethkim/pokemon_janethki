@@ -12,12 +12,19 @@ MainWindow::MainWindow()
   dead = false;
   srand(clock());
   window = new QWidget;
+  tabs = new QStackedLayout(window);
+  start_screen = new StartScreen(window,this);
+  tabs->addWidget(start_screen);
   
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
+ 
 
   scene = new QGraphicsScene;
 
   view = new MainView(scene, this, window);
+//  view = new MainView(scene, this, window);
+  tabs->addWidget(view);
+//  tabs->setCurrentWidget(view);
 
   view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
   timer = new QTimer(this);
@@ -70,6 +77,10 @@ MainWindow::MainWindow()
   
   starmie = new QPixmap("Images/remorepics/Starmie_scale.png");
   beam = new QPixmap("Images/hyper_beam.png");
+  
+  temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
+  scene->addItem(temp);
+  badThings.push_back(temp);
 
   scene->addItem(user);
   
@@ -140,8 +151,6 @@ MainWindow::~MainWindow()
 void MainWindow::show()
 {
   setFocus();
-  timer->start();
-  timer_user->start();
   window->show();
 
 }
@@ -285,7 +294,7 @@ void MainWindow::handleTimer_fall()
   {
     timer_fall->stop();
     timer_user->start();
-    user->jumped = false;
+//    user->jumped = false;
     
   }
   else
@@ -345,7 +354,7 @@ void MainWindow::generateEnemy()
         continue;
       else if (temp->collidesWithItem(badThings[j]))
       {
-        cout << "Probably Starmie removed." << endl;
+//        cout << "Probably Starmie removed." << endl;
         scene->removeItem(temp);
         badThings.remove(temp);
         break;
@@ -362,4 +371,17 @@ void MainWindow::handleTimer_die()
   if (user->getY() > WINDOW_MAX_Y+100)
     timer_die->stop();
 }
+
+void MainWindow::gameStart()
+{
+  tabs->setCurrentWidget(view);
+  timer->start();
+  timer_user->start();
+}
+
+QPushButton* MainWindow::getQuit()
+{
+  return start_screen->getQuit();
+}
+
 

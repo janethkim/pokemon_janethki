@@ -46,7 +46,7 @@ void Starmie::move()
   else if (count < 1000)
   {
     beam->setMove(true);
-    if (count%50 == 0)
+    if (count%75 == 0)
     {
       HyperBeam *temp = new HyperBeam(beampic, x-20, y+25);
       badThings->push_back(temp);

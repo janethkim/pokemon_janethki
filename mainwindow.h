@@ -10,6 +10,7 @@
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QGraphicsRectItem>
+#include <QStackedLayout>
 #include "background.h"
 #include "player.h"
 #include "mainview.h"
@@ -18,11 +19,12 @@
 #include "jigglypuff.h"
 #include "pokeball.h"
 #include "starmie.h"
+#include "startscreen.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
-
+class StartScreen;
 class MainView;
 
 class MainWindow : public QWidget {
@@ -33,9 +35,13 @@ public:
   void show();
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
+  void gameStart();
+  QPushButton* getQuit();
   
 private:
   QWidget *window;
+  QStackedLayout *tabs;
+  StartScreen *start_screen;
   QVBoxLayout *layout;
   QGraphicsRectItem *grid;
   QTimer *timer, *timer_user, *timer_die, *timer_enemy;

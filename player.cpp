@@ -1,7 +1,8 @@
 #include "player.h"  
 
 
-Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, Pidgey* pidgey_, double x_, double y_)
+Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, Pidgey* pidgey_,
+double x_, double y_)
   : Thing(pixMap_, x_, y_), jumped(false), pidgey(pidgey_)
 {
   count = 0;
@@ -26,7 +27,7 @@ Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, Pidgey* pidgey
 void Player::move()
 {
   count = count+(vx*2);
-  if (count > 10)
+  if (count > 20)
   {
     position = position+1;
     switch (position%3) {
@@ -56,10 +57,11 @@ void Player::jump()
 
 void Player::fall()
 {
-
-  vy = vy - 0.1;
-  if (vy < -5)
-    vy = -5;
+  if (jumped)
+  { vy = 0.2; jumped = false; }
+  vy = vy - 0.02;
+  if (vy < -2)
+    vy = -2;
   y = y -vy;
   if (y > 340)
   {  y = 340; vy = 0; }
@@ -83,9 +85,12 @@ void Player::fall()
 void Player::rise()
 {
   if(!jumped)
-  { vy = 2; jumped = false; pidgey->setVisible(true); }
+  { vy = 0.2; jumped = true; pidgey->setVisible(true); }
   
   y = y - vy;
+  vy += 0.02;
+  if (vy > 2)
+    vy = 2;
   if ((y-65) < 0)
   { y =65; vy = 0; }
   setPos(x,y);
@@ -93,7 +98,11 @@ void Player::rise()
   
   pidgey->setPos(x-30, y-65); pidgey->setY(y-65);
 //  pidgey->move();
-  vy += 0.5;
+  
+//  if (vy > 1)
+//    vy = 1;
+//  if (vy > 5)
+//    vy = 5;
   
 }
 
@@ -125,5 +134,13 @@ int Player::getScore()
   return score;
 }
 
+void Player::setName(string name_)
+{
+  name = name_; 
+}
+string Player::getName()
+{
+  return name;
+}
 
 

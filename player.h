@@ -3,8 +3,9 @@
 
 #include "thing.h"
 #include "pidgey.h"
+#include <string>
 //#include <QGraphicsSceneMouseEvent>
-
+using namespace std;
 
 class Player : public Thing {
 public:
@@ -18,6 +19,8 @@ public:
   bool decreaseLife();
   void updateScore(int val);
   int getScore();
+  void setName(string name_);
+  string getName();
   
 //protected:
 //  void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -30,6 +33,7 @@ private:
   int lives;
   int score;
   Pidgey *pidgey;
+  string name;
 
 
 };

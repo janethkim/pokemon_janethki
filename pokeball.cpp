@@ -11,7 +11,7 @@ Pokeball::Pokeball(QPixmap *pixmap_, double x_, double y_, bool move_)
   vx = 0.5;
   if (moving)
   {
-    vx = 0.8;
+    vx = 0.5;
     if (y_ < 200)
       vy = -1;
     else
@@ -26,7 +26,7 @@ void Pokeball::move()
   
   if (moving)
   {
-    angle += PI/150;
+    angle += PI/300;
     y = y0 + 100*sin(angle);
   }
   x -= vx;
