@@ -2,12 +2,12 @@
 
 
 Player::Player(QPixmap* pixMap_, QPixmap* left_, QPixmap* right_, Pidgey* pidgey_,
-double x_, double y_)
+double x_, double y_, double vx_)
   : Thing(pixMap_, x_, y_), jumped(false), pidgey(pidgey_)
 {
   count = 0;
   position = 0;
-  vx = 0.5;
+  vx = vx_;
   vy = 0;
   angle = 0;
   left = left_;
@@ -68,13 +68,15 @@ void Player::fall()
   if ((y-65) < 0)
     y = 65;
   setPos(x,y);
-  if (pidgey->isOpen())
-  { pidgey->setPos(x-30, y-80); pidgey->setY(y-80); }
-  else
-  {  pidgey->setPos(x-30, y-65); pidgey->setY(y-65); }
-  
   if (vy < 0)
     pidgey->setOpen(true);
+    
+  if (pidgey->isOpen())
+  { pidgey->setPos(x-35, y-80); pidgey->setY(y-80); }
+  else
+  {  pidgey->setPos(x-30, y-55); pidgey->setY(y-55); }
+  
+  
 //  else
 //    pidgey->move();
     
@@ -96,7 +98,7 @@ void Player::rise()
   setPos(x,y);
   pidgey->setOpen(false);
   
-  pidgey->setPos(x-30, y-65); pidgey->setY(y-65);
+  pidgey->setPos(x-30, y-55); pidgey->setY(y-55);
 //  pidgey->move();
   
 //  if (vy > 1)
@@ -142,5 +144,12 @@ string Player::getName()
 {
   return name;
 }
+
+void Player::speedUp()
+{
+  vx += 0.01;
+}
+
+
 
 

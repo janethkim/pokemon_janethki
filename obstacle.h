@@ -5,7 +5,7 @@
 
 class Obstacle : public Thing {
 public:
-  Obstacle(QPixmap *pixMap_, double x_, double y_);
+  Obstacle(QPixmap *pixMap_, double x_, double y_, double vx_);
   ~Obstacle()
   {}
   void move();

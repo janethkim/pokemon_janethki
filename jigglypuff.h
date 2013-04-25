@@ -5,7 +5,7 @@
 class Jigglypuff: public Thing {
 public:
 //  Jigglypuff(QPixmap*, double, double);
-  Jigglypuff(QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, double, double);
+  Jigglypuff(QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, QPixmap*, double, double, double);
   void move();
 private:
   int angle;

@@ -39,6 +39,7 @@ public:
   void keyReleaseEvent(QKeyEvent *event);
   void gameStart();
   QPushButton* getQuit();
+  void SpeedUp();
   
 private:
   QApplication *a;
@@ -50,6 +51,7 @@ private:
   QTimer *timer, *timer_user, *timer_die, *timer_enemy;
 //  QTimer *timer_jump;
   QTimer *timer_rise, *timer_fall, *timer_pokeball;
+  QTimer *speedUp;
   QGraphicsScene *scene;
 //  QGraphicsView *view;
   MainView *view;
@@ -74,6 +76,8 @@ private:
   QWidget *scoreWidget;
   bool dead, pokeball_start;
   int obst, star, puff, generating, what, initialy;
+  double time;
+  double vx;
 //  QList<QGraphicsItem*> collisions;
   
 //  QApplication *app;
@@ -87,6 +91,8 @@ public slots:
   void handleTimer_rise();
   void handleTimer_fall();
   void generatePokeballs();
+  void handle_speedUp();
+  
 //  void debug();
 
   

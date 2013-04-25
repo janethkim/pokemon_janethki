@@ -8,18 +8,20 @@ using namespace std;
 
 MainWindow::MainWindow()
 {
+  vx = 2;
+  time = 10;
   pokeball_start = false;
   obst = star = puff = generating = 0;
   dead = false;
   srand(clock());
   window = new QWidget;
-  bgPic = new QPixmap("Images/game-background.jpg");
+  bgPic = new QPixmap("Images/game-background2.jpg");
   tabs = new QStackedLayout(window);
   start_screen = new StartScreen(window, bgPic, this);
   tabs->addWidget(start_screen);
   
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
- 
+
 
   scene = new QGraphicsScene;
 
@@ -36,10 +38,11 @@ MainWindow::MainWindow()
   timer_fall = new QTimer(this);
   timer_die = new QTimer(this);
   timer_pokeball = new QTimer(this);
+  speedUp = new QTimer(this);
 //  timer_enemy = new QTimer(this);
 //  bgPic = new QPixmap("Images/game-background.jpg");
-  bg_1 = new Background(bgPic, 0, 0);
-  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0);
+  bg_1 = new Background(bgPic, 0, 0, vx);
+  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
   scene->addItem( bg_1 );
   scene->addItem( bg_2 );
   setFocus();
@@ -73,7 +76,7 @@ MainWindow::MainWindow()
   stand = new QPixmap("Images/picturesforrunningplayer/standing.png");
   left = new QPixmap("Images/picturesforrunningplayer/runleft.png");
   right = new QPixmap("Images/picturesforrunningplayer/runright1.png");
-  user = new Player(stand, left, right, bird, 100, 340);
+  user = new Player(stand, left, right, bird, 100, 340, vx);
   
   obstacle = new QPixmap("Images/boulder_scale.png");
   
@@ -87,27 +90,30 @@ MainWindow::MainWindow()
   r7 = new QPixmap("Images/jigglypuff_315.png");
   
   pokeball = new QPixmap("Images/remorepics/Pokeball_scale.png");
-  Thing* temp = new Pokeball(pokeball, WINDOW_MAX_X, 150, true);
-  scene->addItem(temp);
-  goodThings.push_back(temp);
+//  Thing* temp = new Pokeball(pokeball, WINDOW_MAX_X, 150, true);
+//  scene->addItem(temp);
+//  goodThings.push_back(temp);
   
   starmie = new QPixmap("Images/remorepics/Starmie_scale.png");
   beam = new QPixmap("Images/hyper_beam.png");
   
-  temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
-  scene->addItem(temp);
-  badThings.push_back(temp);
+//  Thing* temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
+//  scene->addItem(temp);
+//  badThings.push_back(temp);
 
   scene->addItem(user);
+  
+  speedUp->setInterval(10000);
+  connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
   
   timer_pokeball->setInterval(250);
   connect(timer_pokeball, SIGNAL(timeout()), this, SLOT(generatePokeballs()));
   
-  timer_user->setInterval(5);
+  timer_user->setInterval(time);
   connect(timer_user, SIGNAL(timeout()), this, SLOT(handleTimer_user()));
 //  connect(timer_user, SIGNAL(timeout()), this, SLOT(debug()))
   
-  timer->setInterval(5);
+  timer->setInterval(time);
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(generateEnemy()));
@@ -182,8 +188,18 @@ void MainWindow::handleTimer_user()
 
 void MainWindow::handleTimer()
 {
+  
+  if (bg_1->getX() <= -WINDOW_MAX_X)
+  {
+    bg_2->setPos(-5, 0);
+    
+  }
+  else if (bg_2->getX() <= -WINDOW_MAX_X)
+    bg_1->setPos(-5,0);
+  
   bg_1->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
   bg_2->move(WINDOW_MAX_X, WINDOW_MAX_Y);
+  
   for (int i = 0; i < badThings.size(); i++)
   { 
     badThings[i]->move();
@@ -201,10 +217,12 @@ void MainWindow::handleTimer()
       bird->setVisible(false);
       timer->stop();
       timer_user->stop();
-//      timer_jump->stop();
+      //  timer_jump->stop();
       timer_fall->stop();
       timer_rise->stop();
+      speedUp->stop();
       timer_die->start();
+//      speedUp->stop();
       break;
     }
   }
@@ -325,7 +343,8 @@ void MainWindow::handleTimer_fall()
 
 void MainWindow::generateEnemy()
 {
-  int choice = rand()%500;
+  int divide = 500/vx;
+  int choice = rand()%divide;
   Thing* temp;
   bool added = false;
   switch(choice)
@@ -336,7 +355,7 @@ void MainWindow::generateEnemy()
     obst++;
     if (obst%5 == 0)
     {
-      temp = new Obstacle(obstacle, WINDOW_MAX_X, 335);
+      temp = new Obstacle(obstacle, WINDOW_MAX_X, 335, vx);
       scene->addItem(temp);
       
       badThings.push_back(temp);
@@ -349,7 +368,7 @@ void MainWindow::generateEnemy()
     puff++;
     if (puff%5 == 0)
     {
-      temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335);
+      temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335, vx);
       scene->addItem(temp);
       badThings.push_back(temp);
       added = true;
@@ -359,7 +378,7 @@ void MainWindow::generateEnemy()
     star++;
     if (star%5 == 0)
     {
-      temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene);
+      temp = new Starmie(starmie, beam, user, 750/vx, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
       scene->addItem(temp);
       badThings.push_back(temp);
       added = true;
@@ -390,8 +409,19 @@ void MainWindow::generateEnemy()
 
 void MainWindow::handleTimer_die()
 {
+//  dead = true;
+//  bird->setVisible(false);
+//  timer->stop();
+//  timer_user->stop();
+////  timer_jump->stop();
+//  timer_fall->stop();
+//  timer_rise->stop();
+//  speedUp->stop();
+  
   user->die();
   user->decreaseLife();
+  //if(user->decreaseLife())
+    //GAME OVER
   if (user->getY() > WINDOW_MAX_Y+100)
     timer_die->stop();
 }
@@ -401,6 +431,7 @@ void MainWindow::gameStart()
   tabs->setCurrentWidget(view);
   timer->start();
   timer_user->start();
+  speedUp->start();
 
 }
 
@@ -426,7 +457,7 @@ void MainWindow::generatePokeballs()
       if (generating >= 7)
       { generating = 0; pokeball_start = false; timer_pokeball->stop(); break; }
    
-      temp = new Pokeball(pokeball, x, initialy, false);
+      temp = new Pokeball(pokeball, x, initialy, false, vx);
       scene->addItem(temp);
       temp->setZValue(0);
       goodThings.push_back(temp);
@@ -441,9 +472,9 @@ void MainWindow::generatePokeballs()
         break;
       }
       if ((initialy+generating*20)> 320)
-        temp = new Pokeball(pokeball, x, 320, false);
+        temp = new Pokeball(pokeball, x, 320, false, vx);
       else
-        temp = new Pokeball(pokeball, x, initialy+(generating*20), false);
+        temp = new Pokeball(pokeball, x, initialy+(generating*20), false, vx);
       scene->addItem(temp);
       temp->setZValue(0);
       goodThings.push_back(temp);
@@ -457,7 +488,7 @@ void MainWindow::generatePokeballs()
         timer_pokeball->stop();
         break;
       }
-      temp = new Pokeball(pokeball, x, 150, true);
+      temp = new Pokeball(pokeball, x, 150, true, vx);
       temp->setZValue(0);
       scene->addItem(temp);
       goodThings.push_back(temp);
@@ -466,6 +497,27 @@ void MainWindow::generatePokeballs()
           
   }
   
+}
+
+void MainWindow::handle_speedUp()
+{
+//  timer->stop();
+//  user->speedUp();
+//  bg_1->speedUp();
+//  bg_2->speedUp();
+
+//  vx += 0.01;
+//  
+  time = time*0.99;
+////  
+  if (time <= 0.01)
+    time = 0.01;
+  //time -= time/20;
+
+  
+  timer->setInterval(time); 
+  timer_user->setInterval(time);
+//  
 }
 
 

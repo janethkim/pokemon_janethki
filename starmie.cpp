@@ -1,20 +1,20 @@
 #include "starmie.h"
 #include <iostream>
-using namespace std;
+
 
 
 Starmie::Starmie(QPixmap *pixMap_, QPixmap *beampic_, Player *user_, int focus_, double x_,
-double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_)
-  : Thing(pixMap_, x_, y_), user(user_), focus(focus_), badThings(badThings_), scene(scene_),
+double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_)
+  : Thing(pixMap_, x_, y_), user(user_), beamvx(vx_), focus(focus_), badThings(badThings_), scene(scene_),
   beampic(beampic_)
 {
-
-  beam = new HyperBeam(beampic_, x_-50, y_+25);
+  vx = vx_;
+  beam = new HyperBeam(beampic_, x_-50, y_+25, beamvx);
   badThings->push_back(beam);
   scene->addItem(beam);
   count = 0;
-  vx = 0.5;
-  vy = 0.5;
+//  vx = vx_;
+  vy = 1;
 //  beam->setVisible(false);
 }
 
@@ -43,12 +43,16 @@ void Starmie::move()
     }
     beam->setPos(x-20,y+25);
   }
-  else if (count < 1000)
+  else if (count < (focus*2))
   {
     beam->setMove(true);
-    if (count%75 == 0)
+    int mod = focus/15;
+//    cout << "Gets here" << endl;
+    if (count%mod == 0)
     {
-      HyperBeam *temp = new HyperBeam(beampic, x-20, y+25);
+//      cout << "Gets here." << endl;
+   
+      HyperBeam *temp = new HyperBeam(beampic, x-20, y+25, beamvx);
       badThings->push_back(temp);
       scene->addItem(temp);
       temp->setMove(true);
@@ -59,13 +63,14 @@ void Starmie::move()
   {
 //    beam->setMove(false);
 //    beam->remove();
+//   std::cout << "Gets to negative." << endl;
     vx = -0.5;
 //    beam->setVisible(false);
 //    beam->setPos(x-20,y+25);
   }
   
   x -= vx;
-  setPos(x,y);
+  QGraphicsPixmapItem::setPos(x,y);
 //  beam->setPos(x-20,y+25);
 }
 

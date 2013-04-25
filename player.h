@@ -9,13 +9,14 @@ using namespace std;
 
 class Player : public Thing {
 public:
-  Player(QPixmap* pixMap_, QPixmap* left, QPixmap* right, Pidgey* pidgey_, double x_, double y_);
+  Player(QPixmap* pixMap_, QPixmap* left, QPixmap* right, Pidgey* pidgey_, double x_, double y_, double vx_);
   void move();
   void jump();
   void fall();
   void rise();
   bool jumped;
   void die();
+  void speedUp();
   bool decreaseLife();
   void updateScore(int val);
   int getScore();

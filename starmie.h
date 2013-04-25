@@ -7,13 +7,14 @@
 
 class Starmie : public Thing {
 public:
-  Starmie(QPixmap*, QPixmap*, Player*, int, double, double, MyList<Thing*>*, QGraphicsScene*);
+  Starmie(QPixmap*, QPixmap*, Player*, int, double, double, MyList<Thing*>*, QGraphicsScene*, double);
   ~Starmie();
   HyperBeam* getBeam();
   void move();
   bool timeIsUp();
 private:
   Player *user;
+  double beamvx;
   int focus, count;
   HyperBeam *beam;
   MyList<Thing*> *badThings;

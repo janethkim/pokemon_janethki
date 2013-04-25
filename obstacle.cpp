@@ -1,9 +1,9 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle(QPixmap* pixMap_, double x_, double y_)
+Obstacle::Obstacle(QPixmap* pixMap_, double x_, double y_, double vx_)
   : Thing(pixMap_, x_, y_)
 {
-  vx = 0.5;
+  vx = vx_;
   vy = 0;
 }
 

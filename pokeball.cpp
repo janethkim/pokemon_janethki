@@ -5,13 +5,13 @@ using namespace std;
 
 #define PI 3.14159265
 
-Pokeball::Pokeball(QPixmap *pixmap_, double x_, double y_, bool move_)
+Pokeball::Pokeball(QPixmap *pixmap_, double x_, double y_, bool move_, double vx_)
   : Thing(pixmap_, x_, y_), moving(move_), y0(y_)
 {
-  vx = 0.5;
+  vx = vx_;
   if (moving)
   {
-    vx = 0.5;
+    vx = vx_*1.2;
     if (y_ < 200)
       vy = -1;
     else
@@ -26,7 +26,7 @@ void Pokeball::move()
   
   if (moving)
   {
-    angle += PI/300;
+    angle += vx*PI/300;
     y = y0 + 100*sin(angle);
   }
   x -= vx;

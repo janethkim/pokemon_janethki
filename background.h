@@ -5,11 +5,14 @@
 
 class Background : public Thing {
 public:
-  Background(QPixmap *pixMap_, double x_, double y_);
+  Background(QPixmap *pixMap_, double x_, double y_, double vx_);
   ~Background() {}
   void move(int xmax, int ymax);
   void move() {};
   void die();
+  void speedUp();
+  int getX();
+  void setNewPos(int, int);
 
 };
 

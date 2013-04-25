@@ -5,7 +5,7 @@
 
 class Pokeball : public Thing {
 public:
-  Pokeball(QPixmap *pixmap_, double x_, double y_, bool move_);
+  Pokeball(QPixmap *pixmap_, double x_, double y_, bool move_, double vx_);
   void move();
   int collision();
 private:
