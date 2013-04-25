@@ -20,6 +20,8 @@
 #include "pokeball.h"
 #include "starmie.h"
 #include "startscreen.h"
+#include <QLineEdit>
+#include <QLabel>
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
@@ -39,6 +41,7 @@ public:
   QPushButton* getQuit();
   
 private:
+  QApplication *a;
   QWidget *window;
   QStackedLayout *tabs;
   StartScreen *start_screen;
@@ -46,7 +49,7 @@ private:
   QGraphicsRectItem *grid;
   QTimer *timer, *timer_user, *timer_die, *timer_enemy;
 //  QTimer *timer_jump;
-  QTimer *timer_rise, *timer_fall;
+  QTimer *timer_rise, *timer_fall, *timer_pokeball;
   QGraphicsScene *scene;
 //  QGraphicsView *view;
   MainView *view;
@@ -65,8 +68,12 @@ private:
   MyList<Thing*> badThings;
   MyList<Thing*> goodThings;
   QPixmap *obstacle;
-  bool dead;
-  int obst, star, puff;
+  QLineEdit *score;
+  QLabel *scoreLabel;
+  QGridLayout *scorelayout;
+  QWidget *scoreWidget;
+  bool dead, pokeball_start;
+  int obst, star, puff, generating, what, initialy;
 //  QList<QGraphicsItem*> collisions;
   
 //  QApplication *app;
@@ -79,6 +86,7 @@ public slots:
   void handleTimer_die();
   void handleTimer_rise();
   void handleTimer_fall();
+  void generatePokeballs();
 //  void debug();
 
   

@@ -8,12 +8,14 @@ using namespace std;
 
 MainWindow::MainWindow()
 {
-  obst = star = puff = 0;
+  pokeball_start = false;
+  obst = star = puff = generating = 0;
   dead = false;
   srand(clock());
   window = new QWidget;
+  bgPic = new QPixmap("Images/game-background.jpg");
   tabs = new QStackedLayout(window);
-  start_screen = new StartScreen(window,this);
+  start_screen = new StartScreen(window, bgPic, this);
   tabs->addWidget(start_screen);
   
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
@@ -33,14 +35,28 @@ MainWindow::MainWindow()
   timer_rise = new QTimer(this);
   timer_fall = new QTimer(this);
   timer_die = new QTimer(this);
+  timer_pokeball = new QTimer(this);
 //  timer_enemy = new QTimer(this);
-  bgPic = new QPixmap("Images/game-background.jpg");
+//  bgPic = new QPixmap("Images/game-background.jpg");
   bg_1 = new Background(bgPic, 0, 0);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0);
   scene->addItem( bg_1 );
   scene->addItem( bg_2 );
   setFocus();
-
+  
+  scoreWidget = new QWidget(view);
+  score = new QLineEdit;
+  score->setReadOnly(true);
+  score->setFixedSize(70, 25);
+  scoreLabel = new QLabel(tr("SCORE:"));
+  scoreLabel->setBuddy(score);
+  score->setText("0");
+  
+  scorelayout = new QGridLayout;
+  scorelayout->addWidget(scoreLabel, 0, 0);
+  scorelayout->addWidget(score, 0, 1);
+  scoreWidget->setLayout(scorelayout);
+  
   
   grid = new QGraphicsRectItem(0, 0, WINDOW_MAX_X, WINDOW_MAX_Y-2);
   scene->setSceneRect(grid->rect());
@@ -84,6 +100,9 @@ MainWindow::MainWindow()
 
   scene->addItem(user);
   
+  timer_pokeball->setInterval(250);
+  connect(timer_pokeball, SIGNAL(timeout()), this, SLOT(generatePokeballs()));
+  
   timer_user->setInterval(5);
   connect(timer_user, SIGNAL(timeout()), this, SLOT(handleTimer_user()));
 //  connect(timer_user, SIGNAL(timeout()), this, SLOT(debug()))
@@ -121,6 +140,7 @@ MainWindow::~MainWindow()
   delete window;
   delete timer;
   delete timer_user;
+  delete timer_pokeball;
 //  delete timer_jump;
   delete timer_rise;
   delete timer_fall;
@@ -198,10 +218,12 @@ void MainWindow::handleTimer()
       delete goodThings[i];
       goodThings.pop(i);
     }
-    else if (user->collidesWithItem(goodThings[i]) || bird->collidesWithItem(goodThings[i]))
+    else if (user->collidesWithItem(goodThings[i]))
     {
       int val = goodThings[i]->collision();
       user->updateScore(val);
+      QString s;
+      score->setText(s.setNum(user->getScore()));
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
       goodThings.pop(i);
@@ -310,6 +332,7 @@ void MainWindow::generateEnemy()
   {
   case 0:
   case 5:
+//    timer_pokeball->start();
     obst++;
     if (obst%5 == 0)
     {
@@ -322,6 +345,7 @@ void MainWindow::generateEnemy()
     break;
   case 1:
 //    temp = new Jigglypuff(jigglypuff, 500, 335);
+    timer_pokeball->start();
     puff++;
     if (puff%5 == 0)
     {
@@ -377,11 +401,71 @@ void MainWindow::gameStart()
   tabs->setCurrentWidget(view);
   timer->start();
   timer_user->start();
+
 }
 
 QPushButton* MainWindow::getQuit()
 {
   return start_screen->getQuit();
+}
+
+void MainWindow::generatePokeballs()
+{
+  
+  if (!pokeball_start)
+  { 
+    what = rand() % 3;
+    pokeball_start = true;
+    initialy = rand()%50 + 150;
+  }
+  int x = WINDOW_MAX_X;
+  Thing* temp;
+  switch (what)
+  {
+  case 0: 
+      if (generating >= 7)
+      { generating = 0; pokeball_start = false; timer_pokeball->stop(); break; }
+   
+      temp = new Pokeball(pokeball, x, initialy, false);
+      scene->addItem(temp);
+      temp->setZValue(0);
+      goodThings.push_back(temp);
+      generating++;
+      break;
+  case 1: 
+      if (generating >= 7)
+      {
+        generating = 0;
+        pokeball_start = false;
+        timer_pokeball->stop();
+        break;
+      }
+      if ((initialy+generating*20)> 320)
+        temp = new Pokeball(pokeball, x, 320, false);
+      else
+        temp = new Pokeball(pokeball, x, initialy+(generating*20), false);
+      scene->addItem(temp);
+      temp->setZValue(0);
+      goodThings.push_back(temp);
+      generating++;
+      break;
+  case 2:
+      if (generating >= 1)
+      {
+        generating = 0;
+        pokeball_start = false;
+        timer_pokeball->stop();
+        break;
+      }
+      temp = new Pokeball(pokeball, x, 150, true);
+      temp->setZValue(0);
+      scene->addItem(temp);
+      goodThings.push_back(temp);
+      generating++;
+      break;
+          
+  }
+  
 }
 
 
