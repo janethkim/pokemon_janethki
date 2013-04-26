@@ -1,9 +1,11 @@
 #include "hyperbeam.h"
+#include <iostream>
 
-HyperBeam::HyperBeam(QPixmap *pixMap_, double x_, double y_)
+
+HyperBeam::HyperBeam(QPixmap *pixMap_, double x_, double y_, double vx_)
   : Thing(pixMap_, x_, y_), canMove(false)
 {
-  vx = 3;
+  vx = vx_*2;
   vy = 0;
   xlast = 0;
   count = 0;
@@ -19,7 +21,8 @@ void HyperBeam::move()
 //      xlast = x;
 //  count++;
   x -= vx;
-  setPos(x, y);
+  QGraphicsPixmapItem::setPos(x, y);
+//  std::cout << "Beam being moved?" << endl;
 //  if (scene != NULL && badThings != NULL && (count%25 == 0) && xlast > 200)
 //  {
 //    HyperBeam *temp = new HyperBeam(pixMap, xlast-25, y, NULL, NULL);

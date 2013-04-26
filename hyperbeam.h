@@ -7,7 +7,7 @@
 
 class HyperBeam : public Thing {
 public:
-  HyperBeam(QPixmap *pixMap_, double x_, double y_);
+  HyperBeam(QPixmap *pixMap_, double x_, double y_, double vx_);
   void move();
   void setPos(int x_, int y_);
 //  void remove();
