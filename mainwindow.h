@@ -22,10 +22,13 @@
 #include "startscreen.h"
 #include <QLineEdit>
 #include <QLabel>
+#include "pause.h"
+#include "restart.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
+class Pause;
 class StartScreen;
 class MainView;
 
@@ -38,8 +41,11 @@ public:
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
   void gameStart();
+  void restartGame();
   QPushButton* getQuit();
   void SpeedUp();
+  void pauseGame();
+  void continueGame();
   
 private:
   QApplication *a;
@@ -63,18 +69,21 @@ private:
   QPixmap *stand, *left, *right;
   QPixmap *open, *closed;
   QPixmap *starmie;
+  QPixmap *icon, *pause_c, *pause_u, *restart;
 //  QPixmap *jigglypuff;
   QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   QPixmap *pokeball;
   QPixmap *beam;
   MyList<Thing*> badThings;
   MyList<Thing*> goodThings;
+  MyList<QTimer*> timers;
+  MyList<int> timersToStart;
   QPixmap *obstacle;
   QLineEdit *score;
   QLabel *scoreLabel;
   QGridLayout *scorelayout;
   QWidget *scoreWidget;
-  bool dead, pokeball_start;
+  bool dead, pokeball_start, first;
   int obst, star, puff, generating, what, initialy;
   double time;
   double vx;

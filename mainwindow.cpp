@@ -4,10 +4,12 @@
 #include <iostream>
 #include <time.h>
 
+
 using namespace std;
 
 MainWindow::MainWindow()
 {
+  first = true;
   vx = 2;
   time = 10;
   pokeball_start = false;
@@ -22,6 +24,13 @@ MainWindow::MainWindow()
   
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
 
+  pause_c = new QPixmap("Images/Pause_clicked.png");
+  pause_u = new QPixmap("Images/Pause_unclicked.png");
+  restart = new QPixmap("Images/restart.png");
+  QPixmap temporary =  restart->scaled(35,35);
+  delete restart;
+  restart = new QPixmap(temporary);
+  
 
   scene = new QGraphicsScene;
 
@@ -39,12 +48,19 @@ MainWindow::MainWindow()
   timer_die = new QTimer(this);
   timer_pokeball = new QTimer(this);
   speedUp = new QTimer(this);
+  timers.push_back(timer);
+  timers.push_back(timer_user);
+  timers.push_back(timer_rise);
+  timers.push_back(timer_fall);
+  timers.push_back(timer_die);
+  timers.push_back(timer_pokeball);
+  timers.push_back(speedUp);
 //  timer_enemy = new QTimer(this);
 //  bgPic = new QPixmap("Images/game-background.jpg");
-  bg_1 = new Background(bgPic, 0, 0, vx);
-  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
-  scene->addItem( bg_1 );
-  scene->addItem( bg_2 );
+//  bg_1 = new Background(bgPic, 0, 0, vx);
+//  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
+//  scene->addItem( bg_1 );
+//  scene->addItem( bg_2 );
   setFocus();
   
   scoreWidget = new QWidget(view);
@@ -69,14 +85,14 @@ MainWindow::MainWindow()
   
   open = new QPixmap("Images/pidgey.png");
   closed = new QPixmap("Images/pidgey_close.png");
-  bird = new Pidgey(open, closed, 0, 0);
-  scene->addItem(bird);
-  bird->setVisible(false);
+//  bird = new Pidgey(open, closed, 0, 0);
+//  scene->addItem(bird);
+//  bird->setVisible(false);
   
   stand = new QPixmap("Images/picturesforrunningplayer/standing.png");
   left = new QPixmap("Images/picturesforrunningplayer/runleft.png");
   right = new QPixmap("Images/picturesforrunningplayer/runright1.png");
-  user = new Player(stand, left, right, bird, 100, 340, vx);
+//  user = new Player(stand, left, right, bird, 100, 340, vx);
   
   obstacle = new QPixmap("Images/boulder_scale.png");
   
@@ -88,6 +104,24 @@ MainWindow::MainWindow()
   r5 = new QPixmap("Images/jigglypuff_225.png");
   r6 = new QPixmap("Images/jigglypuff_270.png");
   r7 = new QPixmap("Images/jigglypuff_315.png");
+  
+  icon = new QPixmap("Images/icon.png");
+//  QGraphicsPixmapItem *temp;
+//  for (int i = 0; i < 3; i++)
+//  {
+//    temp = new QGraphicsPixmapItem( *icon );
+//    temp->setPos(750 - i*40, 5);
+//    scene->addItem(temp);
+//    temp->setZValue(2);
+//  }
+//  
+//  temp = new Pause( pause_u, pause_c, 150, 0, this );
+//  scene->addItem(temp);
+//  temp->setZValue(2);
+  
+//  temp = new QGraphicsPixmapItem( *icon );
+//  temp->setPos(600, 50);
+//  scene->addItem(temp);
   
   pokeball = new QPixmap("Images/remorepics/Pokeball_scale.png");
 //  Thing* temp = new Pokeball(pokeball, WINDOW_MAX_X, 150, true);
@@ -101,7 +135,7 @@ MainWindow::MainWindow()
 //  scene->addItem(temp);
 //  badThings.push_back(temp);
 
-  scene->addItem(user);
+//  scene->addItem(user);
   
   speedUp->setInterval(10000);
   connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
@@ -169,6 +203,7 @@ MainWindow::~MainWindow()
   delete open;
   delete closed;
   delete beam;
+  delete icon;
 //  delete badThings;
 //  delete goodThings;
 }
@@ -179,6 +214,105 @@ void MainWindow::show()
   setFocus();
   window->show();
 
+}
+
+void MainWindow::gameStart()
+{
+//  if (first)
+//  {
+//    bird = new Pidgey(open, closed, 0, 0);
+//    scene->addItem(bird);
+//  
+//    user = new Player(stand, left, right, bird, 100, 340, vx);
+//    first = false;
+//  } 
+//  else
+//  {
+//    scene->removeItem( user );
+//    scene->removeItem( bird );
+//    scene->clear();
+//    badThings.clear();
+//    goodThings.clear();
+//  }
+  if (!first)
+  {
+//    delete user;
+//    delete bg_1;
+//    delete bg_2;
+//    delete bird;
+    scene->clear();
+    badThings.clear();
+    goodThings.clear();
+    for (int i = 0; i < timers.size(); i++)
+    {
+      timers[i]->stop();
+    }
+   
+  }
+  dead = false;
+  first = false;
+  bg_1 = new Background(bgPic, 0, 0, vx);
+  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
+  scene->addItem( bg_1 );
+  scene->addItem( bg_2 );
+  bird = new Pidgey(open, closed, 0, 0);
+  scene->addItem(bird);
+
+  user = new Player(stand, left, right, bird, 100, 340, vx);
+  time = 10;
+
+  bird->setVisible(false);
+  scene->addItem( user );
+  
+  QGraphicsPixmapItem *temp;
+  
+  for (int i = 0; i < 3; i++)
+  {
+    temp = new QGraphicsPixmapItem( *icon );
+    temp->setPos(750 - i*40, 5);
+    scene->addItem(temp);
+    temp->setZValue(2);
+  }
+  
+  temp = new Pause( pause_u, pause_c, 150, 0, this );
+  scene->addItem(temp);
+  temp->setZValue(2);
+  
+  temp = new Restart(restart, 200, 0, this);
+  scene->addItem(temp);
+  temp->setZValue(2);
+  tabs->setCurrentWidget(view);
+  view->setFocus();
+   
+  
+  timer->setInterval(time);
+  timer_user->setInterval(time);
+  timer->start();
+  timer_user->start();
+  speedUp->start();
+
+}
+
+void MainWindow::continueGame()
+{
+  for (int i = 0; i < timersToStart.size(); i++)
+  {
+    timers[timersToStart[i]]->start();
+  }
+  timersToStart.clear();
+}
+
+void MainWindow::pauseGame()
+{
+  
+  for(int i = 0; i < timers.size(); i++)
+  {
+    if (timers[i]->isActive())
+    {
+      timersToStart.push_back(i);
+      timers[i]->stop();
+    }  
+  }
 }
 
 void MainWindow::handleTimer_user()
@@ -214,18 +348,29 @@ void MainWindow::handleTimer()
     else if (user->collidesWithItem(badThings[i]))
     {
       dead = true;
-      bird->setVisible(false);
+//      std::cout << "Current Life count before decreasing: " << user->getLives() << std::endl;
+//      user->decreaseLife();
+//      std::cout << "Life after decreasing: " << user->getLives() << std::endl;
+      
       timer->stop();
       timer_user->stop();
       //  timer_jump->stop();
       timer_fall->stop();
       timer_rise->stop();
+      bird->setVisible(false);
       speedUp->stop();
       timer_die->start();
+//      timer_die->start();
 //      speedUp->stop();
       break;
     }
   }
+  
+//  if (dead)
+//  {
+//    user->decreaseLife();
+//    timer_die->start();
+//  }
   
   for (int i = 0; i < goodThings.size(); i++)
   {
@@ -409,30 +554,74 @@ void MainWindow::generateEnemy()
 
 void MainWindow::handleTimer_die()
 {
-//  dead = true;
-//  bird->setVisible(false);
-//  timer->stop();
-//  timer_user->stop();
-////  timer_jump->stop();
-//  timer_fall->stop();
-//  timer_rise->stop();
-//  speedUp->stop();
+
   
   user->die();
-  user->decreaseLife();
+//  std::cout << "Lives: " << user->getLives() << std::endl;
+//  user->decreaseLife();
   //if(user->decreaseLife())
     //GAME OVER
+  bool over = user->gameOver();
   if (user->getY() > WINDOW_MAX_Y+100)
+  { 
     timer_die->stop();
+    if (!over)
+    {
+      
+      restartGame();
+    }
+  }
 }
 
-void MainWindow::gameStart()
+
+
+void MainWindow::restartGame()
 {
+  user->decreaseLife();
+  if (user->getLives() == 0)
+    return;
+  scene->removeItem( user );
+  scene->removeItem( bird );
+  scene->clear();
+  badThings.clear();
+  goodThings.clear();
+  time = 10;
+  bg_1 = new Background(bgPic, 0, 0, vx);
+  bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
+  scene->addItem( bg_1 );
+  scene->addItem( bg_2 );
+
+  scene->addItem(bird);
+  bird->setVisible(false);
+  scene->addItem( user );
+  user->restart(vx);
+  user->setZValue(2);
+  dead = false;
+  
+  QGraphicsPixmapItem *temp;
+  for (int i = 0; i < user->getLives(); i++)
+  {
+    temp = new QGraphicsPixmapItem( *icon );
+    temp->setPos(750 - i*40, 5);
+    scene->addItem(temp);
+    temp->setZValue(2);
+  }
+  
+  temp = new Pause(pause_u, pause_c, 150, 0, this);
+  scene->addItem(temp);
+  
+  temp = new Restart(restart, 200, 0, this);
+  scene->addItem(temp);
+  temp->setZValue(2);
+  
   tabs->setCurrentWidget(view);
+  timer->setInterval(time);
+  timer_user->setInterval(time);
   timer->start();
   timer_user->start();
   speedUp->start();
-
+  view->setFocus();
+  
 }
 
 QPushButton* MainWindow::getQuit()
@@ -508,7 +697,7 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-  time = time*0.99;
+  time = time*0.95;
 ////  
   if (time <= 0.01)
     time = 0.01;
