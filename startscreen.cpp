@@ -44,6 +44,9 @@ StartScreen::StartScreen(QWidget *parent, QPixmap *bg_, MainWindow *m)
   setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
   
   connect(start, SIGNAL(clicked()), this, SLOT(handleStart()));
+  connect(quit, SIGNAL(clicked()), m, SLOT(callQuit()));
+
+    
 }
 
 void StartScreen::handleStart()
@@ -51,10 +54,10 @@ void StartScreen::handleStart()
   main->gameStart();
 }
 
-QPushButton* StartScreen::getQuit()
-{
-  return quit;
-}
+//QPushButton* StartScreen::getQuit()
+//{
+//  return quit;
+//}
 
 //void StartScreen::handleQuit()
 //{

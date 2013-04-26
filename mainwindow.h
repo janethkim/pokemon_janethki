@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
+#include <QApplication>
 #include <QMainWindow>
 #include <QTimer>
 #include <QVBoxLayout>
@@ -24,10 +24,13 @@
 #include <QLabel>
 #include "pause.h"
 #include "restart.h"
+#include "quit.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
+class Quit;
+class Restart;
 class Pause;
 class StartScreen;
 class MainView;
@@ -35,14 +38,14 @@ class MainView;
 class MainWindow : public QWidget {
   Q_OBJECT
 public:
-  explicit MainWindow();
+  explicit MainWindow(QApplication *a_);
   ~MainWindow();
   void show();
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
   void gameStart();
   void restartGame();
-  QPushButton* getQuit();
+//  QPushButton* getQuit();
   void SpeedUp();
   void pauseGame();
   void continueGame();
@@ -69,7 +72,7 @@ private:
   QPixmap *stand, *left, *right;
   QPixmap *open, *closed;
   QPixmap *starmie;
-  QPixmap *icon, *pause_c, *pause_u, *restart;
+  QPixmap *icon, *pause_c, *pause_u, *restart, *quit;
 //  QPixmap *jigglypuff;
   QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   QPixmap *pokeball;
@@ -87,6 +90,7 @@ private:
   int obst, star, puff, generating, what, initialy;
   double time;
   double vx;
+//  QApplication *a;
 //  QList<QGraphicsItem*> collisions;
   
 //  QApplication *app;
@@ -101,6 +105,7 @@ public slots:
   void handleTimer_fall();
   void generatePokeballs();
   void handle_speedUp();
+  void callQuit();
   
 //  void debug();
 

@@ -23,7 +23,7 @@ class StartScreen : public QGraphicsView
   Q_OBJECT
 public:
   StartScreen(QWidget *parent, QPixmap *bg_, MainWindow *m);
-  QPushButton* getQuit();
+//  QPushButton* getQuit();
 //  void handleStart();
 //  void handleQuit();
 //  void paintEvent(QPaintEvent *);

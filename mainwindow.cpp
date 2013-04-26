@@ -7,7 +7,8 @@
 
 using namespace std;
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QApplication* a_)
+  : a(a_)
 {
   first = true;
   vx = 2;
@@ -27,9 +28,8 @@ MainWindow::MainWindow()
   pause_c = new QPixmap("Images/Pause_clicked.png");
   pause_u = new QPixmap("Images/Pause_unclicked.png");
   restart = new QPixmap("Images/restart.png");
-  QPixmap temporary =  restart->scaled(35,35);
-  delete restart;
-  restart = new QPixmap(temporary);
+  quit = new QPixmap("Images/quit_scale.png");
+
   
 
   scene = new QGraphicsScene;
@@ -69,7 +69,7 @@ MainWindow::MainWindow()
   score->setFixedSize(70, 25);
   scoreLabel = new QLabel(tr("SCORE:"));
   scoreLabel->setBuddy(score);
-  score->setText("0");
+  
   
   scorelayout = new QGridLayout;
   scorelayout->addWidget(scoreLabel, 0, 0);
@@ -248,6 +248,7 @@ void MainWindow::gameStart()
       timers[i]->stop();
     }
    
+   
   }
   dead = false;
   first = false;
@@ -278,12 +279,18 @@ void MainWindow::gameStart()
   scene->addItem(temp);
   temp->setZValue(2);
   
-  temp = new Restart(restart, 200, 0, this);
+  temp = new Restart(restart, 200, 2, this);
   scene->addItem(temp);
   temp->setZValue(2);
+  
+  temp = new Quit(quit, 245, 1, this);
+  scene->addItem(temp);
+  temp->setZValue(2);
+  
   tabs->setCurrentWidget(view);
   view->setFocus();
-   
+  
+  score->setText("0");
   
   timer->setInterval(time);
   timer_user->setInterval(time);
@@ -609,8 +616,13 @@ void MainWindow::restartGame()
   
   temp = new Pause(pause_u, pause_c, 150, 0, this);
   scene->addItem(temp);
+  temp->setZValue(2);
   
-  temp = new Restart(restart, 200, 0, this);
+  temp = new Restart(restart, 200, 2, this);
+  scene->addItem(temp);
+  temp->setZValue(2);
+  
+  temp = new Quit(quit, 245, 1, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
@@ -624,10 +636,14 @@ void MainWindow::restartGame()
   
 }
 
-QPushButton* MainWindow::getQuit()
+void MainWindow::callQuit()
 {
-  return start_screen->getQuit();
+  a->quit();
 }
+//QPushButton* MainWindow::getQuit()
+//{
+//  return start_screen->getQuit();
+//}
 
 void MainWindow::generatePokeballs()
 {
