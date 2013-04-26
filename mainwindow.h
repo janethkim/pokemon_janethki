@@ -25,10 +25,13 @@
 #include "pause.h"
 #include "restart.h"
 #include "quit.h"
+#include <string>
+#include "username.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
+class Username;
 class Quit;
 class Restart;
 class Pause;
@@ -49,12 +52,16 @@ public:
   void SpeedUp();
   void pauseGame();
   void continueGame();
+  void lastLife();
+  void setName(std::string name_);
+  void goToUsername();
   
 private:
   QApplication *a;
   QWidget *window;
   QStackedLayout *tabs;
   StartScreen *start_screen;
+  Username *name_screen;
   QVBoxLayout *layout;
   QGraphicsRectItem *grid;
   QTimer *timer, *timer_user, *timer_die, *timer_enemy;
@@ -73,6 +80,7 @@ private:
   QPixmap *open, *closed;
   QPixmap *starmie;
   QPixmap *icon, *pause_c, *pause_u, *restart, *quit;
+  QPixmap *gameOver;
 //  QPixmap *jigglypuff;
   QPixmap *jigglypuff, *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   QPixmap *pokeball;
@@ -83,13 +91,14 @@ private:
   MyList<int> timersToStart;
   QPixmap *obstacle;
   QLineEdit *score;
-  QLabel *scoreLabel;
+  QLabel *scoreLabel, *user_name;
   QGridLayout *scorelayout;
   QWidget *scoreWidget;
-  bool dead, pokeball_start, first;
+  bool dead, pokeball_start, first, paused;
   int obst, star, puff, generating, what, initialy;
   double time;
   double vx;
+  std::string name;
 //  QApplication *a;
 //  QList<QGraphicsItem*> collisions;
   

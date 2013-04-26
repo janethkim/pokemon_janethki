@@ -10,6 +10,7 @@ using namespace std;
 MainWindow::MainWindow(QApplication* a_)
   : a(a_)
 {
+  paused = false;
   first = true;
   vx = 2;
   time = 10;
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QApplication* a_)
   tabs = new QStackedLayout(window);
   start_screen = new StartScreen(window, bgPic, this);
   tabs->addWidget(start_screen);
+  name_screen = new Username(window, bgPic, this);
+  tabs->addWidget(name_screen);
   
   window->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y );
 
@@ -69,11 +72,13 @@ MainWindow::MainWindow(QApplication* a_)
   score->setFixedSize(70, 25);
   scoreLabel = new QLabel(tr("SCORE:"));
   scoreLabel->setBuddy(score);
+  user_name = new QLabel;
   
   
   scorelayout = new QGridLayout;
   scorelayout->addWidget(scoreLabel, 0, 0);
   scorelayout->addWidget(score, 0, 1);
+  scorelayout->addWidget(user_name, 0, 3);
   scoreWidget->setLayout(scorelayout);
   
   
@@ -130,6 +135,7 @@ MainWindow::MainWindow(QApplication* a_)
   
   starmie = new QPixmap("Images/remorepics/Starmie_scale.png");
   beam = new QPixmap("Images/hyper_beam.png");
+  gameOver = new QPixmap("Images/gameOver_words.png");
   
 //  Thing* temp = new Starmie(starmie, beam, user, 500, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
 //  scene->addItem(temp);
@@ -208,6 +214,17 @@ MainWindow::~MainWindow()
 //  delete goodThings;
 }
 
+void MainWindow::setName(std::string name_)
+{
+  name = name_;
+  
+}
+
+
+void MainWindow::goToUsername()
+{
+  tabs->setCurrentWidget(name_screen);
+}
 
 void MainWindow::show()
 {
@@ -218,6 +235,7 @@ void MainWindow::show()
 
 void MainWindow::gameStart()
 {
+  
 //  if (first)
 //  {
 //    bird = new Pidgey(open, closed, 0, 0);
@@ -247,9 +265,12 @@ void MainWindow::gameStart()
     {
       timers[i]->stop();
     }
-   
-   
   }
+//  else
+//  {
+//    tabs->setCurrentWidget(name_screen);
+//  }
+  paused = false;
   dead = false;
   first = false;
   bg_1 = new Background(bgPic, 0, 0, vx);
@@ -260,6 +281,11 @@ void MainWindow::gameStart()
   scene->addItem(bird);
 
   user = new Player(stand, left, right, bird, 100, 340, vx);
+  user->setName(name);
+  QString temp_name;
+  temp_name = temp_name.fromStdString(name);
+  temp_name.prepend("PLAYER: ");
+  user_name->setText(temp_name);
   time = 10;
 
   bird->setVisible(false);
@@ -275,15 +301,15 @@ void MainWindow::gameStart()
     temp->setZValue(2);
   }
   
-  temp = new Pause( pause_u, pause_c, 150, 0, this );
+  temp = new Pause( pause_u, pause_c, 10, 450, this );
   scene->addItem(temp);
   temp->setZValue(2);
   
-  temp = new Restart(restart, 200, 2, this);
+  temp = new Restart(restart, 710, 452, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
-  temp = new Quit(quit, 245, 1, this);
+  temp = new Quit(quit, 750, 451, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
@@ -302,6 +328,7 @@ void MainWindow::gameStart()
 
 void MainWindow::continueGame()
 {
+  paused = false;
   for (int i = 0; i < timersToStart.size(); i++)
   {
     timers[timersToStart[i]]->start();
@@ -311,7 +338,7 @@ void MainWindow::continueGame()
 
 void MainWindow::pauseGame()
 {
-  
+  paused = true;
   for(int i = 0; i < timers.size(); i++)
   {
     if (timers[i]->isActive())
@@ -425,7 +452,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 //  cout << this->hasFocus() << endl;
 //  cout << "What." << endl;
-  if (!dead)
+  if (!dead && !paused)
     {
     switch(event->key()) {
       case Qt::Key_Up:
@@ -445,7 +472,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
   
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-  if(!dead)
+  if(!dead && !paused)
   {
     switch(event->key())
     {
@@ -568,15 +595,13 @@ void MainWindow::handleTimer_die()
 //  user->decreaseLife();
   //if(user->decreaseLife())
     //GAME OVER
-  bool over = user->gameOver();
+//  bool over = user->gameOver();
   if (user->getY() > WINDOW_MAX_Y+100)
   { 
     timer_die->stop();
-    if (!over)
-    {
-      
-      restartGame();
-    }
+    
+    restartGame();
+    
   }
 }
 
@@ -586,7 +611,10 @@ void MainWindow::restartGame()
 {
   user->decreaseLife();
   if (user->getLives() == 0)
+  {
+    lastLife();
     return;
+  }
   scene->removeItem( user );
   scene->removeItem( bird );
   scene->clear();
@@ -614,15 +642,15 @@ void MainWindow::restartGame()
     temp->setZValue(2);
   }
   
-  temp = new Pause(pause_u, pause_c, 150, 0, this);
+  temp = new Pause(pause_u, pause_c, 10, 450, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
-  temp = new Restart(restart, 200, 2, this);
+  temp = new Restart(restart, 710, 452, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
-  temp = new Quit(quit, 245, 1, this);
+  temp = new Quit(quit, 750, 451, this);
   scene->addItem(temp);
   temp->setZValue(2);
   
@@ -634,6 +662,13 @@ void MainWindow::restartGame()
   speedUp->start();
   view->setFocus();
   
+}
+
+void MainWindow::lastLife()
+{
+  QGraphicsPixmapItem* temp = new QGraphicsPixmapItem( *gameOver );
+  temp->setPos(250, 200);
+  scene->addItem(temp);
 }
 
 void MainWindow::callQuit()

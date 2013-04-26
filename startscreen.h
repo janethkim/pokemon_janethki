@@ -33,13 +33,13 @@ private:
 //  Start *start;
 //  Quit *quit;
   MainWindow *main;
-  QPixmap* newGame;
+//  QPixmap* newGame;
   QGraphicsScene* scene;
   QPixmap *bg;
   QGraphicsPixmapItem* background;
   QGraphicsRectItem* grid;
   QHBoxLayout *layout;
-  QPaintEvent *p;
+//  QPaintEvent *p;
   QWidget *buttons;
 //  QApplication *a;
   

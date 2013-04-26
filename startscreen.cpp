@@ -51,7 +51,7 @@ StartScreen::StartScreen(QWidget *parent, QPixmap *bg_, MainWindow *m)
 
 void StartScreen::handleStart()
 {
-  main->gameStart();
+  main->goToUsername();
 }
 
 //QPushButton* StartScreen::getQuit()
