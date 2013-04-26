@@ -748,7 +748,7 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-  time = time*0.95;
+  time = time*0.9;
 ////  
   if (time <= 0.01)
     time = 0.01;
