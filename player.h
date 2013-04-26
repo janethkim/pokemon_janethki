@@ -17,11 +17,14 @@ public:
   bool jumped;
   void die();
   void speedUp();
-  bool decreaseLife();
+  void decreaseLife();
+  bool gameOver();
+  void restart(double vx_);
   void updateScore(int val);
   int getScore();
   void setName(string name_);
   string getName();
+  int getLives();
   
 //protected:
 //  void mousePressEvent(QGraphicsSceneMouseEvent *event);

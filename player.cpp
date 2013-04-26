@@ -40,6 +40,26 @@ void Player::move()
   
 }
 
+int Player::getLives()
+{
+  return lives;
+}
+
+void Player::restart(double vx_)
+{
+  pidgey->setVisible(false);
+  setPos(100, 340);
+  setRotation(0);
+  x = 100;
+  y = 340;
+  vy = 0;
+  vx = vx_;
+  angle = 0;
+  count = 0;
+  position = 0;
+
+}
+
 void Player::jump()
 {
   if (!jumped)
@@ -117,9 +137,14 @@ void Player::die()
   setPos(x, y);
 }
 
-bool Player::decreaseLife()
+void Player::decreaseLife()
 {
-  lives--;
+  lives = lives - 1;
+ 
+}
+
+bool Player::gameOver()
+{
   if (lives <= 0)
     return true;
   else
