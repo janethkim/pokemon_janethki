@@ -5,8 +5,9 @@
   + USC ID: 3403982931
 
 ### Game Information
-  + Game Name: myAwsomeGame
-  + Game Description: Maybe something like Plants vs. Zombies? But need a side scroller?
+  + Game Name: Pokemons Attack!
+  + Game Description: A side scroller game where you can use the up key to fly and avoid attacking Pokemon.
+      Try to collect as many Pokeballs as you can to earn points. Moving pokeballs are worth 
   + [Game Design Doc](GameDesignDoc.md)
 
 
@@ -14,11 +15,14 @@
 The grader should use the following procedure to compile and run the code:
 ```shell
 #Compile Instructions
-echo "Write command here"
+echo "qmake -project"
+echo "qmake"
+echo "make"
 #Doxygen Instructions
-echo "Write command here"
+echo "doxygen -g config.txt"
+echo "doxygen config.txt"
 #Command to run
-echo "Write command here"
+echo "./game_janethki"
 ```
 
 ### Screenshots -- [Optional]
