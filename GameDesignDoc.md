@@ -46,20 +46,20 @@ all 3 lives.
 
 ## User Layout
 When the game starts, a [start screen] (Images/StartScreen.png) will pull up.
-It will have 3 buttons with the labels
-start, directions, and quit. The start button leads to [another screen] (Images/Name.png) which asks the user
+It will have 2 buttons with the labels start and quit.
+The start button leads to [another screen] (Images/Name.png) which asks the user
 to input a name. After that, the interface will display the main [gamescreen] (Images/Gameplay.png).
-After counting for 3 seconds, the game will start. In the top right corner of the game,
+~~After counting for 3 seconds, the game will start.~~ In the bottom corners of the game,
 there will be buttons for pausing the game and for quitting the game.
 
-When you click the [pause button] (Images/pause.png), it will lead you to another screen that has 3 buttons:
-resume game, directions, and quit.
+When you click the [pause button] (Images/pause.png), the game pauses.
 
-If you click the [directions] (Images/Directions.png) button, it will bring up a screen with the purpose of 
-the game and what each thing does.
+~~If you click the [directions] (Images/Directions.png) button, it will bring up a screen with the purpose of 
+the game and what each thing does.~~
 
-If you click the [quit screen] (Images/quit.png), it will display the score, which the user can click OK.
-Then the window closes.
+If you clicke the quit button, then [GAME OVER] (Images/gameOver_word.png) will be displayed
+
+~~If you click the [quit screen] (Images/quit.png), a GAME OVER screen will appear~~
 
 
 
