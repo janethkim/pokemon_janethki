@@ -246,22 +246,7 @@ void MainWindow::show()
 void MainWindow::gameStart()
 {
   
-//  if (first)
-//  {
-//    bird = new Pidgey(open, closed, 0, 0);
-//    scene->addItem(bird);
-//  
-//    user = new Player(stand, left, right, bird, 100, 340, vx);
-//    first = false;
-//  } 
-//  else
-//  {
-//    scene->removeItem( user );
-//    scene->removeItem( bird );
-//    scene->clear();
-//    badThings.clear();
-//    goodThings.clear();
-//  }
+
   if (!first)
   {
 //    delete user;

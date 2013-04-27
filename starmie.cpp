@@ -10,13 +10,13 @@ double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_)
 {
   receding = false;
   vx = vx_+1;
-  beam = new HyperBeam(beampic_, x_-50, y_+25, beamvx);
-  badThings->push_back(beam);
-  scene->addItem(beam);
+//  beam = new HyperBeam(beampic_, x_-50, y_+25, beamvx);
+//  badThings->push_back(beam);
+//  scene->addItem(beam);
   count = 0;
 //  vx = vx_;
   vy = 1;
-  vx_neg = -vx_/2;
+  vx_neg = -vx_/4;
 //  beam->setVisible(false);
 }
 
@@ -26,7 +26,7 @@ void Starmie::move()
   if (!receding && x < 700 && x > 650)
   {
     vx = 0;
-    beam->setPos(x-20,y+25);
+//    beam->setPos(x-20,y+25);
     receding = true;
 
 //    beam->setVisible(true);
@@ -44,11 +44,11 @@ void Starmie::move()
     {
       y -= vy;
     }
-    beam->setPos(x-20,y+25);
+//    beam->setPos(x-20,y+25);
   }
   else if (count > (focus*1.2) && count < (focus*2))
   {
-    beam->setMove(true);
+
     int mod = focus/15;
 //    cout << "Gets here" << endl;
     if (count%mod == 0)

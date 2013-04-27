@@ -5,8 +5,9 @@
 HyperBeam::HyperBeam(QPixmap *pixMap_, double x_, double y_, double vx_)
   : Thing(pixMap_, x_, y_), canMove(false)
 {
-  vx = vx_*4;
+  vx = vx_*2;
   vy = 0;
+//  std::cout << "BEam is created..." << std::endl;
 //  xlast = 0;
 //  count = 0;
 }

@@ -107,7 +107,13 @@ void Player::fall()
 void Player::rise()
 {
   if(!jumped)
-  { vy = 0.2; jumped = true; pidgey->setVisible(true); }
+  {
+    vy = 0.2;
+    jumped = true;
+    pidgey->setPos(x-30, y-55);
+    pidgey->setY(y-55);
+    pidgey->setVisible(true);
+  }
   
   y = y - vy;
   vy += 0.02;

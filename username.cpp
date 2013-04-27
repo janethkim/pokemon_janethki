@@ -9,6 +9,7 @@ Username::Username(QWidget *parent, QPixmap *bg_, MainWindow *m)
   scene->addItem(background);
   enter = new QPushButton("Enter Username");
   name = new QLineEdit;
+  name->setPlaceholderText("Enter a username.");
   overall = new QWidget(this);
   
   layout = new QVBoxLayout;
@@ -31,7 +32,7 @@ void Username::handleEnter()
 {
   if (name->text().isEmpty())
   {
-    name->setText("Enter a username.");
+//    name->setText("Enter a username.");
     return;
   }
   

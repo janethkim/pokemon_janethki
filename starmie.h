@@ -49,9 +49,9 @@ private:
   /** The count that indicates how many times the starmie's move function was called */
   int count;
   
-  /** The starting beam that travels intiially with the Starmie */
-  HyperBeam *beam;
-  
+//  /** The starting beam that travels intiially with the Starmie */
+//  HyperBeam *beam;
+//  
   /** The pointer to the list of bad Things so that the Starmie can add hyper beams to
    *  the list of badThings */
   MyList<Thing*> *badThings;
