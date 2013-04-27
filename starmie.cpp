@@ -74,13 +74,13 @@ void Starmie::move()
 //  beam->setPos(x-20,y+25);
 }
 
-bool Starmie::timeIsUp()
-{
-  if (count >= focus)
-    return true;
-  else
-    return false;
-}
+//bool Starmie::timeIsUp()
+//{
+//  if (count >= focus)
+//    return true;
+//  else
+//    return false;
+//}
 
 Starmie::~Starmie()
 {
