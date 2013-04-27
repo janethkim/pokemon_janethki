@@ -80,8 +80,8 @@ void Player::fall()
   if (jumped)
   { vy = 0.2; jumped = false; }
   vy = vy - 0.02;
-  if (vy < -2)
-    vy = -2;
+  if (vy < -2.5)
+    vy = -2.5;
   y = y -vy;
   if (y > 340)
   {  y = 340; vy = 0; }
@@ -111,8 +111,8 @@ void Player::rise()
   
   y = y - vy;
   vy += 0.02;
-  if (vy > 2)
-    vy = 2;
+  if (vy > 2.5)
+    vy = 2.5;
   if ((y-65) < 0)
   { y =65; vy = 0; }
   setPos(x,y);

@@ -57,7 +57,7 @@ public:
   void restart(double vx_);
   
   /** Updates the score of the player by the given amount.
-   *  @val The amount by which the score should increase */
+   *  @param val The amount by which the score should increase */
   void updateScore(int val);
   
   /** Returns the player's score

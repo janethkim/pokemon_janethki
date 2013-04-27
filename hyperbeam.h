@@ -26,7 +26,7 @@ public:
 //  void remove();
 
   /** Indicates whether the hyper beam was allowed to move
-   *  @value If true, the hyper beam would move; if not,
+   *  @param value If true, the hyper beam would move; if not,
    *  the hyper beam wouldn't move */
   void setMove(bool value);
 private:

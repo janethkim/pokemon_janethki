@@ -20,7 +20,7 @@ public:
    *  @param x_ The initial x position
    *  @param y_ The initial y position
    *  @param badThings_ A pointer to the list of bad Things
-   *  @param scene  A pointer to the main gameplay scene
+   *  @param scene_  A pointer to the main gameplay scene
    *  @param vx_ The initial x velocity */
   Starmie(QPixmap *pixMap_, QPixmap *beampic_, Player *user_, int focus_, double x_,
     double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_);
