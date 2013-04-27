@@ -33,18 +33,18 @@ doxygen config.txt
 ### Screenshots -- [Optional]
 Start Screen:
   
-![alt text](https://github.com/usc-csci102-spring2013/game_janethki/blob/master/Images/screenshots/screenshot1.JPG "Start Screen")
+![alt text](Images/screenshots/screenshot1.JPG "Start Screen")
 
 
 
 Pause Screen:
 
-![alt text] (https://github.com/usc-csci102-spring2013/game_janethki/blob/master/Images/screenshots/screenshot2.JPG "Paused Screen")
+![alt text] (Images/screenshots/screenshot2.JPG "Paused Screen")
 
 
 Gameplay:
 
-![alt text] (https://github.com/usc-csci102-spring2013/game_janethki/blob/master/Images/screenshots/screenshot3.JPG "Game Play")
+![alt text] (Images/screenshots/screenshot3.JPG "Game Play")
 
 
 
