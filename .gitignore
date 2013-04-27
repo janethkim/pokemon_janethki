@@ -38,6 +38,11 @@ pause.h~
 pause.cpp~
 quit.h~
 quit.cpp~
+Images/gameOver.png
+moc_username.cpp
+restart.h~
+username.cpp~
+username.h~
 
 
 
