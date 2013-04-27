@@ -191,6 +191,8 @@ MainWindow::~MainWindow()
   delete timer_rise;
   delete timer_fall;
   delete timer_die;
+  delete speedUp;
+//  delete timer_enemy;
   delete bgPic;
   delete stand;
   delete left;
@@ -210,6 +212,12 @@ MainWindow::~MainWindow()
   delete closed;
   delete beam;
   delete icon;
+  delete gameOver;
+  delete quit;
+  delete restart;
+  delete pause_c;
+  delete pause_u;
+  
 //  delete badThings;
 //  delete goodThings;
 }
@@ -301,6 +309,8 @@ void MainWindow::gameStart()
     temp->setZValue(2);
   }
   
+  lastIcon = temp;
+  
   temp = new Pause( pause_u, pause_c, 10, 450, this );
   scene->addItem(temp);
   temp->setZValue(2);
@@ -371,7 +381,7 @@ void MainWindow::handleTimer()
   for (int i = 0; i < badThings.size(); i++)
   { 
     badThings[i]->move();
-    if (badThings[i]->getX() < -300 || badThings[i]->getX() > WINDOW_MAX_X+20 )
+    if (badThings[i]->getX() < -50 || badThings[i]->getX() > WINDOW_MAX_X+20 )
     {
       scene->removeItem(badThings[i]);
       Thing* temp = badThings.pop(i);
@@ -409,7 +419,7 @@ void MainWindow::handleTimer()
   for (int i = 0; i < goodThings.size(); i++)
   {
     goodThings[i]->move();
-    if (goodThings[i]->getX() < -300 || goodThings[i]->getX() > WINDOW_MAX_X+20 )
+    if (goodThings[i]->getX() < -50 || goodThings[i]->getX() > WINDOW_MAX_X+20 )
     {
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
@@ -640,6 +650,9 @@ void MainWindow::restartGame()
     temp->setPos(750 - i*40, 5);
     scene->addItem(temp);
     temp->setZValue(2);
+    
+    if (i == (user->getLives() - 1))
+      lastIcon = temp;
   }
   
   temp = new Pause(pause_u, pause_c, 10, 450, this);
@@ -666,6 +679,8 @@ void MainWindow::restartGame()
 
 void MainWindow::lastLife()
 {
+  scene->removeItem( lastIcon );
+  delete lastIcon;
   QGraphicsPixmapItem* temp = new QGraphicsPixmapItem( *gameOver );
   temp->setPos(250, 200);
   scene->addItem(temp);
@@ -748,15 +763,15 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-  time = time*0.95;
-////  
-  if (time <= 0.01)
-    time = 0.01;
-  //time -= time/20;
+//  time = time*0.86;
+//////  
+//  if (time <= 0.01)
+//    time = 0.01;
+//  //time -= time/20;
 
-  
-  timer->setInterval(time); 
-  timer_user->setInterval(time);
+//  
+//  timer->setInterval(time); 
+//  timer_user->setInterval(time);
 //  
 }
 

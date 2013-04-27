@@ -124,8 +124,8 @@ private:
   /** Timer that controls how the user dies */
   QTimer *timer_die;
   
-  /** Timer that controls how enemies are generated */
-  QTimer *timer_enemy;
+//  /** Timer that controls how enemies are generated */
+//  QTimer *timer_enemy;
 //  QTimer *timer_jump;
   
   /** Controls how the user flies */
@@ -298,6 +298,9 @@ private:
   
   /** The user name of the player */
   std::string name;
+  
+  /** The last life icon */
+  QGraphicsPixmapItem *lastIcon;
 //  QApplication *a;
 //  QList<QGraphicsItem*> collisions;
   

@@ -61,6 +61,9 @@ private:
   
   /** The picture of the hyper beam */
   QPixmap* beampic;
+  
+  /** True if the Starmie is moving out of the scene */
+  bool receding;
 
 };
 
