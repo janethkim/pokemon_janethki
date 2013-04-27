@@ -170,10 +170,10 @@ string Player::getName()
   return name;
 }
 
-void Player::speedUp()
-{
-  vx += 0.01;
-}
+//void Player::speedUp()
+//{
+//  vx += 0.01;
+//}
 
 
 

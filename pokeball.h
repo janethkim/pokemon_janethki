@@ -23,7 +23,8 @@ public:
   
   /** This returns the number of points if/when the user hits the pokeball.
    *  If the pokeball is moving in a sinusoidal fashion, it's worth 30 points.
-   *  Otherwise, it's worth 10 points. */
+   *  Otherwise, it's worth 10 points.
+   *  @return The points the collision with the pokeball is worth */
   int collision();
 private:
 

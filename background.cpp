@@ -34,7 +34,7 @@ void Background::move(int xmax, int ymax)
   
 }
 
-void Background::speedUp()
-{
-  vx += 0.01;
-}
+//void Background::speedUp()
+//{
+//  vx += 0.01;
+//}

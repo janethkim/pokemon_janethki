@@ -7,8 +7,8 @@ HyperBeam::HyperBeam(QPixmap *pixMap_, double x_, double y_, double vx_)
 {
   vx = vx_*2;
   vy = 0;
-  xlast = 0;
-  count = 0;
+//  xlast = 0;
+//  count = 0;
 }
 
 

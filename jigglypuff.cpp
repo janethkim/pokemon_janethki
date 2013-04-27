@@ -19,7 +19,7 @@ QPixmap* r4_, QPixmap* r5_, QPixmap* r6_,QPixmap* r7_, double x_, double y_, dou
 {
   vx = vx_*2;
   vy = 0;
-  angle = 0;
+//  angle = 0;
   count = 0;
 //  setTransformOriginPoint(50, 50);
 }

@@ -22,7 +22,8 @@ public:
   /** A pure virtual function that dictates how the Thing objects will move */
   virtual void move() = 0;
   
-  /** A virtual function that returns the score upon collision */
+  /** A virtual function that returns the score upon collision
+   *  @return An int that indicates how many points the collision is worth */
   virtual int collision() { return 0; }
   
   /** Returns the x position
