@@ -24,8 +24,8 @@ attacks from other Pokemon
   and also flaps its wings. It accelerates depending how long the player presses the key.
   1. ~~At certain parts, a [Chansey] (Images/chansey.png) will come out and lay eggs, which you can run into
   to find out objects inside~~
-  1. ~From the egg, you could get a floating [Mew] (Images/Mew.gif) that will accompany the user for
-  a little while. It forms a forcefield that makes the user essentially invincible.~
+  1. ~~From the egg, you could get a floating [Mew] (Images/Mew.gif) that will accompany the user for
+  a little while. It forms a forcefield that makes the user essentially invincible.~~
   
 ## User Interaction
 The user will use the mouse to start the game and pause the game, but most of the gameplay
