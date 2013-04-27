@@ -12,6 +12,8 @@ MainWindow::MainWindow(QApplication* a_)
 {
   paused = false;
   first = true;
+//  vx = 3;
+//  time = 15;
   vx = 5;
   time = 30;
   pokeball_start = false;
@@ -269,6 +271,7 @@ void MainWindow::gameStart()
     scene->clear();
     badThings.clear();
     goodThings.clear();
+//    thingsToDelete.clear();
     for (int i = 0; i < timers.size(); i++)
     {
       timers[i]->stop();
@@ -301,6 +304,7 @@ void MainWindow::gameStart()
   temp_name.prepend("PLAYER: ");
   user_name->setText(temp_name);
   time = 30;
+//  time = 15;
 
   bird->setVisible(false);
   scene->addItem( user );
@@ -389,9 +393,20 @@ void MainWindow::handleTimer()
     badThings[i]->move();
     if (badThings[i]->getX() < -50 || badThings[i]->getX() > WINDOW_MAX_X+20 )
     {
+//      bool Present = false;
       scene->removeItem(badThings[i]);
-//      delete badThings[i];
+//      for (int j = 0; j < thingsToDelete.size(); j++)
+//      {
+//        if (thingsToDelete[j] == badThings[i])
+//          Present = true;
+//      }
+//      if (!Present)
+//      {
+//        delete badThings[i];
+//        thingsToDelete.push_back(badThings[i]);
+//      }
       badThings.remove(badThings[i]);
+     
 //      delete temp;
      
     
@@ -639,7 +654,9 @@ void MainWindow::restartGame()
   scene->clear();
   badThings.clear();
   goodThings.clear();
+//  thingsToDelete.clear();
   time = 30;
+//  time = 15;
   bg_1 = new Background(bgPic, 0, 0, vx);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
   scene->addItem( bg_1 );
@@ -773,7 +790,8 @@ void MainWindow::handle_speedUp()
 //  vx += 0.01;
 //  
   time = time*0.9;
-////  
+//////  
+//  time -= 0.5;
   if (time <= 1)
     time = 1;
   //time -= time/20;

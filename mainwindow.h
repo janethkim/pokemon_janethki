@@ -242,6 +242,9 @@ private:
    *  after the game is paused */
   MyList<int> timersToStart;
   
+//  /** Things that are deleted */
+//  MyList<Thing*> thingsToDelete;
+  
   /** Image of the boulder */
   QPixmap *obstacle;
   
