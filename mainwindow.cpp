@@ -12,8 +12,8 @@ MainWindow::MainWindow(QApplication* a_)
 {
   paused = false;
   first = true;
-  vx = 2;
-  time = 10;
+  vx = 3;
+  time = 15;
   pokeball_start = false;
   obst = star = puff = generating = 0;
   dead = false;
@@ -144,7 +144,7 @@ MainWindow::MainWindow(QApplication* a_)
 
 //  scene->addItem(user);
   
-  speedUp->setInterval(10000);
+  speedUp->setInterval(6000);
   connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
   
   timer_pokeball->setInterval(250);
@@ -155,7 +155,6 @@ MainWindow::MainWindow(QApplication* a_)
 //  connect(timer_user, SIGNAL(timeout()), this, SLOT(debug()))
   
   timer->setInterval(time);
-  connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(generateEnemy()));
   
@@ -279,6 +278,8 @@ void MainWindow::gameStart()
   {
     tabs->removeWidget(start_screen);
     tabs->removeWidget(name_screen);
+    start_screen->setParent(NULL);
+    name_screen->setParent(NULL);
     delete start_screen;
     delete name_screen;
     first = false;
@@ -299,7 +300,7 @@ void MainWindow::gameStart()
   temp_name = temp_name.fromStdString(name);
   temp_name.prepend("PLAYER: ");
   user_name->setText(temp_name);
-  time = 10;
+  time = 15;
 
   bird->setVisible(false);
   scene->addItem( user );
@@ -635,7 +636,7 @@ void MainWindow::restartGame()
   scene->clear();
   badThings.clear();
   goodThings.clear();
-  time = 10;
+  time = 15;
   bg_1 = new Background(bgPic, 0, 0, vx);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
   scene->addItem( bg_1 );
@@ -768,15 +769,15 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-  time = time*0.86;
-////  
-  if (time <= 0.01)
-    time = 0.01;
-  //time -= time/20;
+//  time = time*0.95;
+//////  
+//  if (time <= 0.01)
+//    time = 0.01;
+//  //time -= time/20;
 
-  
-  timer->setInterval(time); 
-  timer_user->setInterval(time);
+//  
+//  timer->setInterval(time); 
+//  timer_user->setInterval(time);
   
 }
 
