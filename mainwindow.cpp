@@ -78,8 +78,9 @@ MainWindow::MainWindow(QApplication* a_)
   scorelayout = new QGridLayout;
   scorelayout->addWidget(scoreLabel, 0, 0);
   scorelayout->addWidget(score, 0, 1);
-  scorelayout->addWidget(user_name, 0, 3);
+  scorelayout->addWidget(user_name, 0, 2);
   scoreWidget->setLayout(scorelayout);
+  scoreWidget->setFixedSize(300, 50);
   
   
   grid = new QGraphicsRectItem(0, 0, WINDOW_MAX_X, WINDOW_MAX_Y-2);
@@ -274,13 +275,17 @@ void MainWindow::gameStart()
       timers[i]->stop();
     }
   }
-//  else
-//  {
-//    tabs->setCurrentWidget(name_screen);
-//  }
+  else
+  {
+    tabs->removeWidget(start_screen);
+    tabs->removeWidget(name_screen);
+    delete start_screen;
+    delete name_screen;
+    first = false;
+  }
   paused = false;
   dead = false;
-  first = false;
+
   bg_1 = new Background(bgPic, 0, 0, vx);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
   scene->addItem( bg_1 );
