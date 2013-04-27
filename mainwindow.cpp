@@ -14,7 +14,7 @@ MainWindow::MainWindow(QApplication* a_)
   first = true;
 //  vx = 3;
 //  time = 15;
-  vx = 5;
+  vx = 7;
   time = 30;
   pokeball_start = false;
   obst = star = puff = generating = 0;
@@ -388,24 +388,17 @@ void MainWindow::handleTimer()
   bg_1->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
   bg_2->move(WINDOW_MAX_X, WINDOW_MAX_Y);
   
-  for (int i = 0; i < badThings.size(); i++)
+  int badThingsSize = badThings.size();
+  MyList<Thing*> badDeleted;
+  for (int i = 0; i < badThingsSize; i++)
   { 
     badThings[i]->move();
     if (badThings[i]->getX() < -50 || badThings[i]->getX() > WINDOW_MAX_X+20 )
     {
 //      bool Present = false;
       scene->removeItem(badThings[i]);
-//      for (int j = 0; j < thingsToDelete.size(); j++)
-//      {
-//        if (thingsToDelete[j] == badThings[i])
-//          Present = true;
-//      }
-//      if (!Present)
-//      {
-//        delete badThings[i];
-//        thingsToDelete.push_back(badThings[i]);
-//      }
-      badThings.remove(badThings[i]);
+      delete badThings[i];
+      badDeleted.push_back(badThings[i]);
      
 //      delete temp;
      
@@ -432,20 +425,26 @@ void MainWindow::handleTimer()
     }
   }
   
-//  if (dead)
-//  {
-//    user->decreaseLife();
-//    timer_die->start();
-//  }
+  for (int i = 0; i < badDeleted.size(); i++)
+  {
+    badThings.remove(badDeleted[i]);
+  }
   
-  for (int i = 0; i < goodThings.size(); i++)
+
+  int goodThingsSize = goodThings.size();
+  MyList<Thing*> goodDeleted;
+  
+  
+  
+  for (int i = 0; i < goodThingsSize; i++)
   {
     goodThings[i]->move();
     if (goodThings[i]->getX() < -50 || goodThings[i]->getX() > WINDOW_MAX_X+20 )
     {
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
-      goodThings.remove(goodThings[i]);
+      goodDeleted.push_back(goodThings[i]);
+//      goodThings.remove(goodThings[i]);
     }
     else if (user->collidesWithItem(goodThings[i]))
     {
@@ -455,26 +454,19 @@ void MainWindow::handleTimer()
       score->setText(s.setNum(user->getScore()));
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
-      goodThings.remove(goodThings[i]);
+      goodDeleted.push_back(goodThings[i]);
+//      goodThings.remove(goodThings[i]);
       
      
     }
   }
   
+  for (int i = 0; i < goodDeleted.size(); i++)
+  {
+    goodThings.remove(goodDeleted[i]);
+  }
   
-//  for (int j = 0; j < badThings.size(); j++)
-//  {
-//    QGraphicsItem *temp = badThings[j];
-//    if (user->collidesWithItem(temp))
-//    {
-//      dead = true;
-//      timer->stop();
-//      timer_user->stop();
-//      timer_jump->stop();
-//      timer_die->start();
-//      
-//    }
-//  }
+  
 
 }
 
@@ -649,6 +641,7 @@ void MainWindow::restartGame()
     lastLife();
     return;
   }
+  pauseGame();
   scene->removeItem( user );
   scene->removeItem( bird );
   scene->clear();
@@ -696,6 +689,7 @@ void MainWindow::restartGame()
   tabs->setCurrentWidget(view);
   timer->setInterval(time);
   timer_user->setInterval(time);
+  continueGame();
   timer->start();
   timer_user->start();
   speedUp->start();
@@ -795,7 +789,7 @@ void MainWindow::handle_speedUp()
   if (time <= 1)
     time = 1;
   //time -= time/20;
-  std::cout << time << std::endl;
+//  std::cout << time << std::endl;
   
   timer->setInterval(time); 
   timer_user->setInterval(time);

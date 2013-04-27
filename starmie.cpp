@@ -16,7 +16,7 @@ double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_)
   count = 0;
 //  vx = vx_;
   vy = 1;
-  vx_neg = -vx_;
+  vx_neg = -vx_/2;
 //  beam->setVisible(false);
 }
 
