@@ -43,16 +43,16 @@ void Jigglypuff::move()
 //    angle = 0;
 //  setPos(x, y);
 //  setPos(x - 30*cos(angle*PI/180),y - 51*sin(angle*PI/180));
-  switch (count%32)
+  switch (count%64)
   {
   case 0: setPixmap( *pixMap ); break;
-  case 4: setPixmap( *r7 ); break;
-  case 8: setPixmap( *r6 ); break;
-  case 12: setPixmap( *r5 ); break;
-  case 16: setPixmap( *r4 ); break;
-  case 20: setPixmap( *r3 ); break;
-  case 24: setPixmap( *r2 ); break;
-  case 28: setPixmap( *r1 ); break;
+  case 8: setPixmap( *r7 ); break;
+  case 16: setPixmap( *r6 ); break;
+  case 24: setPixmap( *r5 ); break;
+  case 32: setPixmap( *r4 ); break;
+  case 40: setPixmap( *r3 ); break;
+  case 48: setPixmap( *r2 ); break;
+  case 56: setPixmap( *r1 ); break;
   }
 //  angle += 5;
 //  setRotation(angle);

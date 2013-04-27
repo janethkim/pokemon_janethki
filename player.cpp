@@ -26,7 +26,7 @@ double x_, double y_, double vx_)
 
 void Player::move()
 {
-  count = count+(vx*2);
+  count = count+vx;
   if (count > 20)
   {
     position = position+1;

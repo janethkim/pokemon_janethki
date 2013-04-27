@@ -64,6 +64,9 @@ private:
   
   /** True if the Starmie is moving out of the scene */
   bool receding;
+  
+  /** The receding velocity of Starmie */
+  double vx_neg;
 
 };
 

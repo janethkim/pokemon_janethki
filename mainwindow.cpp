@@ -12,8 +12,8 @@ MainWindow::MainWindow(QApplication* a_)
 {
   paused = false;
   first = true;
-  vx = 3;
-  time = 15;
+  vx = 5;
+  time = 30;
   pokeball_start = false;
   obst = star = puff = generating = 0;
   dead = false;
@@ -144,7 +144,7 @@ MainWindow::MainWindow(QApplication* a_)
 
 //  scene->addItem(user);
   
-  speedUp->setInterval(6000);
+  speedUp->setInterval(2500);
   connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
   
   timer_pokeball->setInterval(250);
@@ -300,7 +300,7 @@ void MainWindow::gameStart()
   temp_name = temp_name.fromStdString(name);
   temp_name.prepend("PLAYER: ");
   user_name->setText(temp_name);
-  time = 15;
+  time = 30;
 
   bird->setVisible(false);
   scene->addItem( user );
@@ -373,13 +373,13 @@ void MainWindow::handleTimer_user()
 void MainWindow::handleTimer()
 {
   
-  if (bg_1->getX() <= -WINDOW_MAX_X)
-  {
-    bg_2->setPos(-5, 0);
-    
-  }
-  else if (bg_2->getX() <= -WINDOW_MAX_X)
-    bg_1->setPos(-5,0);
+//  if (bg_1->getX() <= -WINDOW_MAX_X)
+//  {
+//    bg_2->setPos(-5, 0);
+//    
+//  }
+//  else if (bg_2->getX() <= -WINDOW_MAX_X)
+//    bg_1->setPos(-5,0);
   
   bg_1->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
   bg_2->move(WINDOW_MAX_X, WINDOW_MAX_Y);
@@ -390,8 +390,9 @@ void MainWindow::handleTimer()
     if (badThings[i]->getX() < -50 || badThings[i]->getX() > WINDOW_MAX_X+20 )
     {
       scene->removeItem(badThings[i]);
-      Thing* temp = badThings.pop(i);
-      delete temp;
+//      delete badThings[i];
+      badThings.remove(badThings[i]);
+//      delete temp;
      
     
     }
@@ -429,7 +430,7 @@ void MainWindow::handleTimer()
     {
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
-      goodThings.pop(i);
+      goodThings.remove(goodThings[i]);
     }
     else if (user->collidesWithItem(goodThings[i]))
     {
@@ -439,7 +440,7 @@ void MainWindow::handleTimer()
       score->setText(s.setNum(user->getScore()));
       scene->removeItem(goodThings[i]);
       delete goodThings[i];
-      goodThings.pop(i);
+      goodThings.remove(goodThings[i]);
       
      
     }
@@ -478,7 +479,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 //          timer_jump->start();
         if (timer_fall->isActive())
           timer_fall->stop();
+//        bird->setVisible(true);
         timer_rise->start();
+        
          
         break;
     }
@@ -573,7 +576,7 @@ void MainWindow::generateEnemy()
     star++;
     if (star%5 == 0)
     {
-      temp = new Starmie(starmie, beam, user, 750/vx, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
+      temp = new Starmie(starmie, beam, user, 500/vx, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
       scene->addItem(temp);
       badThings.push_back(temp);
       added = true;
@@ -636,7 +639,7 @@ void MainWindow::restartGame()
   scene->clear();
   badThings.clear();
   goodThings.clear();
-  time = 15;
+  time = 30;
   bg_1 = new Background(bgPic, 0, 0, vx);
   bg_2 = new Background(bgPic, WINDOW_MAX_X, 0, vx);
   scene->addItem( bg_1 );
@@ -769,15 +772,15 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-//  time = time*0.95;
-//////  
-//  if (time <= 0.01)
-//    time = 0.01;
-//  //time -= time/20;
-
-//  
-//  timer->setInterval(time); 
-//  timer_user->setInterval(time);
+  time = time*0.9;
+////  
+  if (time <= 1)
+    time = 1;
+  //time -= time/20;
+  std::cout << time << std::endl;
+  
+  timer->setInterval(time); 
+  timer_user->setInterval(time);
   
 }
 

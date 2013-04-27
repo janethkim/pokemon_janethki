@@ -5,7 +5,7 @@
 HyperBeam::HyperBeam(QPixmap *pixMap_, double x_, double y_, double vx_)
   : Thing(pixMap_, x_, y_), canMove(false)
 {
-  vx = vx_*2;
+  vx = vx_*4;
   vy = 0;
 //  xlast = 0;
 //  count = 0;

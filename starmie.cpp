@@ -9,13 +9,14 @@ double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_)
   beampic(beampic_)
 {
   receding = false;
-  vx = vx_;
+  vx = vx_+1;
   beam = new HyperBeam(beampic_, x_-50, y_+25, beamvx);
   badThings->push_back(beam);
   scene->addItem(beam);
   count = 0;
 //  vx = vx_;
   vy = 1;
+  vx_neg = -vx_;
 //  beam->setVisible(false);
 }
 
@@ -45,7 +46,7 @@ void Starmie::move()
     }
     beam->setPos(x-20,y+25);
   }
-  else if (count < (focus*2))
+  else if (count > (focus*1.2) && count < (focus*2))
   {
     beam->setMove(true);
     int mod = focus/15;
@@ -66,7 +67,7 @@ void Starmie::move()
 //    beam->setMove(false);
 //    beam->remove();
 //   std::cout << "Gets to negative." << endl;
-    vx = -0.5;
+    vx = vx_neg;
 //    beam->setVisible(false);
 //    beam->setPos(x-20,y+25);
   }
