@@ -768,16 +768,16 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-//  time = time*0.86;
-//////  
-//  if (time <= 0.01)
-//    time = 0.01;
-//  //time -= time/20;
+  time = time*0.86;
+////  
+  if (time <= 0.01)
+    time = 0.01;
+  //time -= time/20;
 
-//  
-//  timer->setInterval(time); 
-//  timer_user->setInterval(time);
-//  
+  
+  timer->setInterval(time); 
+  timer_user->setInterval(time);
+  
 }
 
 
