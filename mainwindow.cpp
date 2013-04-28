@@ -14,7 +14,7 @@ MainWindow::MainWindow(QApplication* a_)
   first = true;
 //  vx = 3;
 //  time = 15;
-  vx = 7;
+  vx =10;
   time = 30;
   pokeball_start = false;
   obst = star = puff = generating = 0;
@@ -146,7 +146,7 @@ MainWindow::MainWindow(QApplication* a_)
 
 //  scene->addItem(user);
   
-  speedUp->setInterval(2500);
+  speedUp->setInterval(10000);
   connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
   
   timer_pokeball->setInterval(250);
@@ -768,7 +768,7 @@ void MainWindow::handle_speedUp()
 
 //  vx += 0.01;
 //  
-  time = time*0.9;
+  time = time*0.8;
 //////  
 //  time -= 0.5;
   if (time <= 1)

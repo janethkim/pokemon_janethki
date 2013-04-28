@@ -15,7 +15,7 @@ double y_, MyList<Thing*> *badThings_, QGraphicsScene *scene_, double vx_)
 //  scene->addItem(beam);
   count = 0;
 //  vx = vx_;
-  vy = 1;
+  vy = 3;
   vx_neg = -vx_/4;
 //  beam->setVisible(false);
 }
@@ -49,7 +49,7 @@ void Starmie::move()
   else if (count > (focus*1.2) && count < (focus*2))
   {
 
-    int mod = focus/15;
+    int mod = focus/10;
 //    cout << "Gets here" << endl;
     if (count%mod == 0)
     {
