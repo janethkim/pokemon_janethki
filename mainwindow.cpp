@@ -558,7 +558,7 @@ void MainWindow::generateEnemy()
     puff++;
     if (puff%5 == 0)
     {
-      temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, 335, vx);
+      temp = new Jigglypuff(jigglypuff, r1, r2, r3, r4, r5, r6, r7, WINDOW_MAX_X, rand()%100+235, vx);
       scene->addItem(temp);
       badThings.push_back(temp);
       added = true;

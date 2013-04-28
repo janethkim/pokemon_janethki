@@ -36,6 +36,14 @@ void Jigglypuff::move()
 //  setPos(x-40*cos(angle*PI/180), y - 25*sin(angle*PI/180));
 //  setTransform(QTransform().translate(800, 335).rotate(angle).translate(-800,-335));
   x -= vx;
+  vy += 0.5;
+  y += vy;
+  
+  if ( y >= 335)
+  {
+    y = 335;
+    vy = -vy;
+  }
   setPos(x, y);
 //  
 //  setRotation(angle);
