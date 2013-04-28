@@ -7,7 +7,9 @@ attacks from other Pokemon
 ## Things
   1. A [Jigglypuff] (Images/jigglypuff.gif) that rolls onto screen. ~~A warning will appear on the
   edge of the screen to indicate that it's coming.~~ It will kill the player if he/she
-  doesn't avoid it.
+  doesn't avoid it. I also implemented it so that if it came in from a higher position
+  than the floor, than it will bounce forward to make it a distinct thing from the
+  boulder.
   1. A [Starmie] (Images/Starmie.gif) that can float in air that will whirl in for like 2 seconds and track
   after the player. It then stops moving and shoots small hyper beams. After shooting, it will leave the screen.
   If the player is caught in it or jumps into it, he/she is annihilated.
