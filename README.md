@@ -8,6 +8,7 @@
   + Game Name: Pokemons Attack!
   + Game Description: A side scroller game where you can use the up key to fly and avoid attacking Pokemon.
       Try to collect as many Pokeballs as you can to earn points. Moving pokeballs are worth more points.
+      The pause icon pauses the game. The arrow icon restarts the whole game and the x icon quits the game.
   + [Game Design Doc](GameDesignDoc.md)
 
 
