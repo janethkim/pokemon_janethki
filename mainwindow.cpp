@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <iostream>
 #include <time.h>
+#include <fstream>
 
 
 using namespace std;
@@ -10,6 +11,15 @@ using namespace std;
 MainWindow::MainWindow(QApplication* a_)
   : a(a_)
 {
+
+ scores = new MaxList;
+//  temp_label.prepend( high_name );
+
+//   QString temp_name;
+//  temp_name = temp_name.fromStdString(name);
+//  temp_name.prepend("PLAYER: ");
+//  user_name->setText(temp_name);
+  
   paused = false;
   first = true;
 //  vx = 3;
@@ -75,14 +85,20 @@ MainWindow::MainWindow(QApplication* a_)
   scoreLabel = new QLabel(tr("SCORE:"));
   scoreLabel->setBuddy(score);
   user_name = new QLabel;
+  level = new QLabel(tr("Level "));
+  high_score = new QLabel;
   
-  
-  scorelayout = new QGridLayout;
-  scorelayout->addWidget(scoreLabel, 0, 0);
-  scorelayout->addWidget(score, 0, 1);
-  scorelayout->addWidget(user_name, 0, 2);
-  scoreWidget->setLayout(scorelayout);
-  scoreWidget->setFixedSize(300, 50);
+  toplayout = new QVBoxLayout;
+  scorelayout = new QHBoxLayout;
+  scorelayout->addWidget(scoreLabel);
+  scorelayout->addWidget(score);
+//  scorelayout->addWidget(user_name, 1, 0);
+  scorelayout->addWidget(level);
+  toplayout->addLayout(scorelayout);
+  toplayout->addWidget(user_name);
+  toplayout->addWidget(high_score);
+  scoreWidget->setLayout(toplayout);
+//  scoreWidget->setFixedSize(400, 75);
   
   
   grid = new QGraphicsRectItem(0, 0, WINDOW_MAX_X, WINDOW_MAX_Y-2);
@@ -114,22 +130,13 @@ MainWindow::MainWindow(QApplication* a_)
   r7 = new QPixmap("Images/jigglypuff_315.png");
   
   icon = new QPixmap("Images/icon.png");
-//  QGraphicsPixmapItem *temp;
-//  for (int i = 0; i < 3; i++)
-//  {
-//    temp = new QGraphicsPixmapItem( *icon );
-//    temp->setPos(750 - i*40, 5);
-//    scene->addItem(temp);
-//    temp->setZValue(2);
-//  }
-//  
-//  temp = new Pause( pause_u, pause_c, 150, 0, this );
-//  scene->addItem(temp);
-//  temp->setZValue(2);
   
-//  temp = new QGraphicsPixmapItem( *icon );
-//  temp->setPos(600, 50);
-//  scene->addItem(temp);
+  chansey_stand = new QPixmap("Images/remorepics/chansey_scale.png");
+  chansey_left = new QPixmap("Images/remorepics/chansey_move.png");
+  chansey_right = new QPixmap("Images/remorepics/chansey_move_right.png");
+  
+ 
+ 
   
   pokeball = new QPixmap("Images/remorepics/Pokeball_scale.png");
 //  Thing* temp = new Pokeball(pokeball, WINDOW_MAX_X, 150, true);
@@ -219,6 +226,7 @@ MainWindow::~MainWindow()
   delete restart;
   delete pause_c;
   delete pause_u;
+  delete scores;
   
 //  delete badThings;
 //  delete goodThings;
@@ -253,6 +261,7 @@ void MainWindow::gameStart()
 //    delete bg_1;
 //    delete bg_2;
 //    delete bird;
+    writeScore();
     scene->clear();
     badThings.clear();
     goodThings.clear();
@@ -261,6 +270,8 @@ void MainWindow::gameStart()
     {
       timers[i]->stop();
     }
+    scores->clear();
+//    scores = new MaxList;
   }
   else
   {
@@ -272,6 +283,59 @@ void MainWindow::gameStart()
     delete name_screen;
     first = false;
   }
+//  scores = new MaxList;
+  ifstream myFile("high_scores.txt");
+
+  int value;
+  string name_what;
+  
+  if (myFile.good())
+  {
+    myFile >> value;
+    myFile.ignore();
+    getline(myFile, name_what);
+  }
+  while (myFile.good())
+  {
+//    myFile >> value;
+//    getline(myFile, name_what);
+    Score *tempscore = new Score;
+    tempscore->num = value;
+    tempscore->name = name_what;
+    scores->push(tempscore);
+//    cout << value << " ";
+//    if (myFile.eof())
+//      break;
+    myFile >> value;
+    myFile.ignore();
+    getline(myFile, name_what);
+  }
+//  high = 0;
+//  int value;
+//  high_name = " ";
+//  while (myFile.good())
+//  {
+//    myFile >> value;
+//    if (value > high)
+//    {
+//      high = value;
+//      getline(myFile, high_name) ;
+//    }
+//    else
+//    {
+//      myFile.ignore(100, '\n');
+//    } 
+//  }
+  myFile.close();
+  if (scores->size() > 0)
+  {
+    int high = scores->top()->num;
+    QString temp_label;
+    temp_label.setNum(high);
+    temp_label.prepend("High Score: ");
+    high_score->setText(temp_label);
+  }
+
   paused = false;
   dead = false;
 
@@ -322,6 +386,15 @@ void MainWindow::gameStart()
   view->setFocus();
   
   score->setText("0");
+  
+  /****TESTING******/
+  /*****************/
+  
+  Thing *temp_what = new Chansey(chansey_stand, chansey_left, chansey_right, 0,
+    340, &goodThings, scene, vx);
+  scene->addItem(temp_what);
+  goodThings.push_back(temp_what);
+  temp_what->setZValue(3);
   
   timer->setInterval(time);
   timer_user->setInterval(time);
@@ -434,12 +507,15 @@ void MainWindow::handleTimer()
     else if (user->collidesWithItem(goodThings[i]))
     {
       int val = goodThings[i]->collision();
-      user->updateScore(val);
-      QString s;
-      score->setText(s.setNum(user->getScore()));
-      scene->removeItem(goodThings[i]);
-      delete goodThings[i];
-      goodDeleted.push_back(goodThings[i]);
+      if (val)
+      {
+        user->updateScore(val);
+        QString s;
+        score->setText(s.setNum(user->getScore()));
+        scene->removeItem(goodThings[i]);
+        delete goodThings[i];
+        goodDeleted.push_back(goodThings[i]);
+      }
 //      goodThings.remove(goodThings[i]);
       
      
@@ -689,10 +765,15 @@ void MainWindow::lastLife()
   QGraphicsPixmapItem* temp = new QGraphicsPixmapItem( *gameOver );
   temp->setPos(250, 200);
   scene->addItem(temp);
+  
+  writeScore();
+  
 }
 
 void MainWindow::callQuit()
 {
+  if (!first)
+    writeScore();
   a->quit();
 }
 //QPushButton* MainWindow::getQuit()
@@ -778,6 +859,34 @@ void MainWindow::handle_speedUp()
   
   timer->setInterval(time); 
   timer_user->setInterval(time);
+  
+}
+
+void MainWindow::writeScore()
+{
+  if (scores != NULL)
+  {
+    ofstream myFile("high_scores.txt");
+    Score *temp;
+    if (user != NULL)
+    {
+      temp = new Score;
+      temp->num = user->getScore();
+      temp->name = user->getName();
+      scores->push(temp);
+    }
+    
+//    cout << scores->size() << endl;
+    for (int i = 0; i < scores->size(); i++)
+    {
+      temp = scores->at(i);
+      myFile << temp->num << " " << temp->name << "\n";
+    }
+      
+      myFile.close();
+  }
+  //  myFile << high << " " << high_name << "\n";
+//  myFile << user->getScore() << " " << user->getName() << "\n";
   
 }
 

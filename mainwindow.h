@@ -11,6 +11,7 @@
 #include <QKeyEvent>
 #include <QGraphicsRectItem>
 #include <QStackedLayout>
+#include <QHBoxLayout>
 #include "background.h"
 #include "player.h"
 #include "mainview.h"
@@ -27,16 +28,25 @@
 #include "quit.h"
 #include <string>
 #include "username.h"
+#include "chansey.h"
+#include "maxlist.h"
 
 #define WINDOW_MAX_X 800
 #define WINDOW_MAX_Y 500
 
+class MaxList;
 class Username;
 class Quit;
 class Restart;
 class Pause;
 class StartScreen;
 class MainView;
+
+struct Score {
+    int num;
+    string name;
+};
+  
 
 /** This class represents the main window that the user sees when playing the game.
  *  Inherits from the QWidget class.
@@ -92,7 +102,14 @@ public:
   /** Sets the visible widget to one that prompts the user to enter a username */
   void goToUsername();
   
+  /** Write score to file */
+  void writeScore();
+  
+  
 private:
+  
+  
+  
   /** A pointer to the QApplication that was passed in from the int main function */
   QApplication *a;
   
@@ -109,7 +126,15 @@ private:
   /** The screen that prompts the user to enter a name */
   Username *name_screen;
   
+//  /** High Score */
+//  int high;
+//  
+//  /** The user with the highest score */
+//  string high_name;
   
+  
+  MaxList *scores;
+   
 //  QVBoxLayout *layout;
 
   /** The rectangle that limits the size of the main scene*/
@@ -229,6 +254,15 @@ private:
   /** The hyper beam image */
   QPixmap *beam;
   
+  /** Standing Chansey image */
+  QPixmap *chansey_stand;
+  
+  /** Moving left Chansey image */
+  QPixmap *chansey_left;
+  
+  /** Moving right Chansey image */
+  QPixmap *chansey_right;
+  
   /** List that holds all the enemies */
   MyList<Thing*> badThings;
   
@@ -257,8 +291,17 @@ private:
   /** The label that states the user's name */
   QLabel *user_name;
   
-  /** The grid layout that holds the score, the scoreLabel and the user_name */
-  QGridLayout *scorelayout;
+  /** The label that states the current level */
+  QLabel *level;
+  
+  /** The label that states the high score */
+  QLabel *high_score;
+  
+  /** The layout that will hold the score, scorelabel, level, and user name */
+  QVBoxLayout *toplayout;
+  
+  /** The layout that holds the score, the scoreLabel and the level */
+  QHBoxLayout *scorelayout;
   
   /** The widget which sets the layout to scoreLayout */
   QWidget *scoreWidget;

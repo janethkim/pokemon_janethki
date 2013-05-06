@@ -8,6 +8,7 @@ void Quit::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
    if (event->button() == Qt::LeftButton) //if it's the left button
    {
+//      w->writeScore();
       w->callQuit();
    }
 }
