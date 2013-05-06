@@ -45,6 +45,15 @@ void MaxList::pop()
   slist_.pop_front();
 }
 
+void MaxList::pop_back()
+{
+  slist_.pop_back();
+}
+
+Score* MaxList::bottom()
+{
+  return slist_.back();
+}
 
 Score* MaxList::top()
 {

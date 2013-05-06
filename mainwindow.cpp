@@ -874,6 +874,9 @@ void MainWindow::writeScore()
       temp->num = user->getScore();
       temp->name = user->getName();
       scores->push(temp);
+      
+      while (scores->size() > 10) //maximum number of items in the list is 10
+        scores->pop_back();
     }
     
 //    cout << scores->size() << endl;

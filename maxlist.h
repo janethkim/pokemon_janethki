@@ -30,8 +30,11 @@ class MaxList
    * @param new A pointer to the Score to be added */
   void push(Score* newscore);
   
-  /** Removes the maximum scored (front) puzzle move */
+  /** Removes the maximum scored (front) score */
   void pop();
+  
+  /** Removes the minimum scored (back) score */
+  void pop_back();
   
   /** Returns Score at indicated position */
   Score* at(int pos);
@@ -40,6 +43,11 @@ class MaxList
    * @return Returns the first item in the list */
   Score* top();
   
+  /** Returns the Score with the lowest score
+   *  @return Returns the last item in the list */
+  Score* bottom();
+  
+  /** Clears the list */
   void clear();
   
  private:
