@@ -10,6 +10,7 @@
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QGraphicsRectItem>
+#include <QGraphicsSimpleTextItem>
 #include <QStackedLayout>
 #include <QHBoxLayout>
 #include "background.h"
@@ -134,7 +135,11 @@ private:
   
   
   MaxList *scores;
+  
+//  MyList<QLabel*> displayScores;
+//  
    
+   QGraphicsSimpleTextItem *highScore;
 //  QVBoxLayout *layout;
 
   /** The rectangle that limits the size of the main scene*/

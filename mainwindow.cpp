@@ -11,7 +11,7 @@ using namespace std;
 MainWindow::MainWindow(QApplication* a_)
   : a(a_)
 {
-
+// highScore = new QGraphicsSimpleTextItem;
  scores = new MaxList;
 //  temp_label.prepend( high_name );
 
@@ -228,6 +228,7 @@ MainWindow::~MainWindow()
   delete pause_u;
   delete scores;
   
+  
 //  delete badThings;
 //  delete goodThings;
 }
@@ -327,14 +328,14 @@ void MainWindow::gameStart()
 //    } 
 //  }
   myFile.close();
-  if (scores->size() > 0)
-  {
-    int high = scores->top()->num;
-    QString temp_label;
-    temp_label.setNum(high);
-    temp_label.prepend("High Score: ");
-    high_score->setText(temp_label);
-  }
+//  if (scores->size() > 0)
+//  {
+//    int high = scores->top()->num;
+//    QString temp_label;
+//    temp_label.setNum(high);
+//    temp_label.prepend("High Score: ");
+//    high_score->setText(temp_label);
+//  }
 
   paused = false;
   dead = false;
@@ -412,6 +413,13 @@ void MainWindow::continueGame()
     timers[timersToStart[i]]->start();
   }
   timersToStart.clear();
+  scene->removeItem(highScore);
+  delete highScore;
+//  for (int i = 0; i < displayScores.size(); i++)
+//  {
+//    delete displayScores.at(i);
+//  }
+//  displayScores.clear();
 }
 
 void MainWindow::pauseGame()
@@ -422,9 +430,30 @@ void MainWindow::pauseGame()
     if (timers[i]->isActive())
     {
       timersToStart.push_back(i);
-      timers[i]->stop();
+      timers[i]->stop();      
+      
     }  
   }
+  highScore = new QGraphicsSimpleTextItem;
+  QString final = "HIGH SCORES:\n";
+  
+  for (int i = 0; i < scores->size(); i++)
+  {
+    
+    QString t1, t2;
+    t1 = t1.fromStdString(scores->at(i)->name);
+    t2.setNum(scores->at(i)->num);
+    t1.prepend(" ");
+    t1.prepend(t2);
+    t1.append("\n");
+    final.append(t1);
+//    temp->setText(t1);
+//    displayScores.push_back(temp);
+  }
+  highScore->setText(final);
+  
+  highScore->setPos(330, 150);
+  scene->addItem(highScore);
 }
 
 void MainWindow::handleTimer_user()
