@@ -731,7 +731,11 @@ void MainWindow::restartGame()
     lastLife();
     return;
   }
-  pauseGame();
+//  pauseGame();
+
+  timer->stop();
+  timer_user->stop(); 
+  
   scene->removeItem( user );
   scene->removeItem( bird );
   scene->clear();
@@ -753,16 +757,21 @@ void MainWindow::restartGame()
   dead = false;
   
   QGraphicsPixmapItem *temp;
-  for (int i = 0; i < user->getLives(); i++)
+  int lives = user->getLives();
+  for (int i = 0; i < lives; i++)
   {
+//    cout << i << endl;
     temp = new QGraphicsPixmapItem( *icon );
     temp->setPos(750 - i*40, 5);
+//    cout << scene << endl;
     scene->addItem(temp);
-    temp->setZValue(2);
+    temp->setZValue(3);
     
     if (i == (user->getLives() - 1))
       lastIcon = temp;
   }
+  
+//  lastIcon = temp;
   
   temp = new Pause(pause_u, pause_c, 10, 450, this);
   scene->addItem(temp);
@@ -779,7 +788,7 @@ void MainWindow::restartGame()
   tabs->setCurrentWidget(view);
   timer->setInterval(time);
   timer_user->setInterval(time);
-  continueGame();
+//  continueGame();
   timer->start();
   timer_user->start();
 //  speedUp->start();
@@ -942,7 +951,7 @@ void MainWindow::levelUp()
   }
 //  switch (curr_level)
 //  {
-//    case 2: bgPic->load("Images/game-background3.jpg");
+//    case 2: bgPic->load("Images/game-backgroundi3.jpg");
 //            bg_1->set
 //            break;
 //    case 3: bgPic->load("Images/game-background4.jpg"); break;
