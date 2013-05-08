@@ -109,7 +109,8 @@ public:
   
 private:
   
-  
+  /** The current level of the game */
+  int curr_level;
   
   /** A pointer to the QApplication that was passed in from the int main function */
   QApplication *a;
@@ -299,8 +300,8 @@ private:
   /** The label that states the current level */
   QLabel *level;
   
-  /** The label that states the high score */
-  QLabel *high_score;
+//  /** The label that states the high score */
+//  QLabel *high_score;
   
   /** The layout that will hold the score, scorelabel, level, and user name */
   QVBoxLayout *toplayout;
@@ -386,6 +387,9 @@ public slots:
   /** Calls the quit function from the QApplication that was passed into the
    *  constructor. */
   void callQuit();
+  
+  /** Levels up the game. */
+  void levelUp();
   
 //  void debug();
 

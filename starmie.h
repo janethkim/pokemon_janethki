@@ -4,6 +4,7 @@
 #include "thing.h"
 #include "player.h"
 #include "hyperbeam.h"
+#include <QGraphicsScene>
 
 
 /** The Starmie class inherits from the Thing class and

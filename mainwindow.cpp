@@ -11,6 +11,7 @@ using namespace std;
 MainWindow::MainWindow(QApplication* a_)
   : a(a_)
 {
+  curr_level = 1;
 // highScore = new QGraphicsSimpleTextItem;
  scores = new MaxList;
 //  temp_label.prepend( high_name );
@@ -86,7 +87,7 @@ MainWindow::MainWindow(QApplication* a_)
   scoreLabel->setBuddy(score);
   user_name = new QLabel;
   level = new QLabel(tr("Level "));
-  high_score = new QLabel;
+//  high_score = new QLabel;
   
   toplayout = new QVBoxLayout;
   scorelayout = new QHBoxLayout;
@@ -96,7 +97,7 @@ MainWindow::MainWindow(QApplication* a_)
   scorelayout->addWidget(level);
   toplayout->addLayout(scorelayout);
   toplayout->addWidget(user_name);
-  toplayout->addWidget(high_score);
+//  toplayout->addWidget(high_score);
   scoreWidget->setLayout(toplayout);
 //  scoreWidget->setFixedSize(400, 75);
   
@@ -154,7 +155,7 @@ MainWindow::MainWindow(QApplication* a_)
 //  scene->addItem(user);
   
   speedUp->setInterval(10000);
-  connect(speedUp, SIGNAL(timeout()), this, SLOT(handle_speedUp()));
+  connect(speedUp, SIGNAL(timeout()), this, SLOT(levelUp()));
   
   timer_pokeball->setInterval(250);
   connect(timer_pokeball, SIGNAL(timeout()), this, SLOT(generatePokeballs()));
@@ -167,11 +168,7 @@ MainWindow::MainWindow(QApplication* a_)
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer, SIGNAL(timeout()), this, SLOT(generateEnemy()));
   
-//  timer_enemy->setInterval(100);
-//  connect(timer_enemy, SIGNAL(timeout()), this, SLOT(generateEnemy()));
-  
-//  timer_jump->setInterval(5);
-//  connect(timer_jump, SIGNAL(timeout()), this, SLOT(handleTimer_jump()));
+
   timer_rise->setInterval(5);
   connect(timer_rise, SIGNAL(timeout()), this, SLOT(handleTimer_rise()));
   
@@ -670,13 +667,16 @@ void MainWindow::generateEnemy()
     }
     break;
   case 3:
-    star++;
-    if (star%5 == 0)
+    if (curr_level == 2 || curr_level == 3)
     {
-      temp = new Starmie(starmie, beam, user, 500/vx, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
-      scene->addItem(temp);
-      badThings.push_back(temp);
-      added = true;
+      star++;
+      if (star%5 == 0)
+      {
+        temp = new Starmie(starmie, beam, user, 500/vx, WINDOW_MAX_X, rand()%335, &badThings, scene, vx);
+        scene->addItem(temp);
+        badThings.push_back(temp);
+        added = true;
+      }
     }
     break;
   default:
@@ -782,7 +782,7 @@ void MainWindow::restartGame()
   continueGame();
   timer->start();
   timer_user->start();
-  speedUp->start();
+//  speedUp->start();
   view->setFocus();
   
 }
@@ -922,4 +922,30 @@ void MainWindow::writeScore()
   
 }
 
+
+void MainWindow::levelUp()
+{
+  curr_level++;
+  
+  if (curr_level == 2)
+  {
+    bgPic->load("Images/game-background3.jpg");
+    bg_1->setPixmap( *bgPic );
+    bg_2->setPixmap( *bgPic );
+  }
+  else if (curr_level == 3)
+  {
+    bgPic->load("Images/game-background4.jpg");
+    bg_1->setPixmap( *bgPic );
+    bg_2->setPixmap( *bgPic ); 
+    speedUp->stop();
+  }
+//  switch (curr_level)
+//  {
+//    case 2: bgPic->load("Images/game-background3.jpg");
+//            bg_1->set
+//            break;
+//    case 3: bgPic->load("Images/game-background4.jpg"); break;
+//  }
+}
 
