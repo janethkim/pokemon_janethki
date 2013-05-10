@@ -4,6 +4,9 @@
   + USC Email: janethki@usc.edu
   + USC ID: 3403982931
 
+### Licensing Information
+  + [License Doc](LICENSE.md)
+
 ### Game Information
   + Game Name: Pokemons Attack!
   + Game Description: A side scroller game where you can use the up key to fly and avoid attacking Pokemon.
@@ -28,10 +31,10 @@ doxygen config.txt
 ```
 #Command to run
 ```shell
-./game_janethki
+./pokemon_janethki
 ```
 
-### Screenshots -- [Optional]
+### Screenshots
 Start Screen:
   
 ![alt text](Images/screenshots/screenshot1.JPG "Start Screen")
